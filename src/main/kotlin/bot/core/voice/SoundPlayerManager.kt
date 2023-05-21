@@ -34,7 +34,7 @@ object SoundPlayerManager {
             }
         }.onFailure {
             if (it is VoiceConnectionInitializationException) {
-                kordLogger.error("An error occured, shutting down connection causing exception=${it}")
+                kordLogger.error("An error occurred, shutting down connection causing exception=${it}")
                 stop()
             }
         }
