@@ -6,6 +6,7 @@ I'm gnot a gnelf, I'm a Discord bot, written in Kotlin with Kord!
 
 ## How do I create a new command?
 Head into the package `bot.command` and create a new "SomethingCommand" that extends "Command", give it a name (which will be used to invoke from the text chat) and a description (which will be shown on !gnome help).  
+OBS.: The prefix `!gnome` can be changed on `bot.constants.Configuration`  
 For example:
 ```
 class HelloCommand: Command(

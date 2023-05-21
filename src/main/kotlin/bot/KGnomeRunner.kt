@@ -3,6 +3,7 @@
  */
 package bot
 
+import bot.constants.GNOME_COMMAND_PREFIX
 import bot.core.CommandHandler
 import bot.core.TriggerRegistrator
 import dev.kord.core.Kord
@@ -22,7 +23,7 @@ suspend fun main(vararg args: String) {
         if (message.author?.isBot == true) return@on
         val content = this.message.content
         kordLogger.info("Incoming message \"${content}\"")
-        if (content.startsWith("!gnome")) {
+        if (content.startsWith(GNOME_COMMAND_PREFIX)) {
             CommandHandler.handle(
                 event = this,
                 args = content
