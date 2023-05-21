@@ -14,6 +14,7 @@ object GnomeRegexTrigger: Trigger(
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.on<MessageCreateEvent> {
+            if (message.author?.isBot == true) return@on
             val message = this.message.content
             if (message.matches(regex)) {
                 this.message.channel.createMessage(GNOME_ASCII.random())
