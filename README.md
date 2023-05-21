@@ -6,7 +6,7 @@ I'm gnot a gnelf, I'm a Discord bot, written in Kotlin with Kord!
 
 ## How do I create a new command?
 Head into the package `bot.command` and create a new "SomethingCommand" that extends "Command", give it a name (which will be used to invoke from the text chat) and a description (which will be shown on !gnome help).  
-OBS.: The prefix `!gnome` can be changed on `bot.constants.Configuration`  
+**Note: The prefix `!gnome` can be changed on `bot.constants.Configuration`**    
 For example:
 ```
 class HelloCommand: Command(
@@ -30,13 +30,15 @@ object HelloTrigger: Trigger(
 ) {
     override suspend fun register(kordInstance: Kord) {
         // when a message is sent 
-        kordInstance.on<MessageCreateEvent> {
+        kordInstance.onIgnoringBots<MessageCreateEvent> {
             this.message.channel.createMessage("Hello!")
         }
     }
 }
 ```
 Just like the commands, these triggers will be registered automatically and can be shown on `!gnome triggers` command.
+  
+**Note: The `onIgnoringBots` is an extension that ignores bots for `MessageCreateEvent` and `VoiceStateUpdateEvent`, it is located in `bot.utilities.KordExtensions.kt`**
 
 ## Who registers the triggers and commands?
 Triggers are registered before Kord starts running, it is done in `KGnomeRunner.kt`, here:

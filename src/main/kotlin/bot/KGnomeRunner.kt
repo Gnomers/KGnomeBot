@@ -6,10 +6,10 @@ package bot
 import bot.constants.GNOME_COMMAND_PREFIX
 import bot.core.CommandHandler
 import bot.core.TriggerRegistrator
+import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.kordLogger
-import dev.kord.core.on
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 
@@ -19,8 +19,7 @@ suspend fun main(vararg args: String) {
 
     kordInstance = Kord(token = args.firstOrNull() ?: error("token required"))
 
-    kordInstance.on<MessageCreateEvent> {
-        if (message.author?.isBot == true) return@on
+    kordInstance.onIgnoringBots<MessageCreateEvent> {
         val content = this.message.content
         kordLogger.info("Incoming message \"${content}\"")
         if (content.startsWith(GNOME_COMMAND_PREFIX)) {

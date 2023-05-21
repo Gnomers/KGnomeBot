@@ -5,9 +5,9 @@ import bot.utilities.Sound
 import bot.utilities.changedDeaf
 import bot.utilities.changedMute
 import bot.utilities.changedStreaming
+import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.core.on
 
 object VoiceJoinTrigger: Trigger(
     name = "channel_joined",
@@ -16,7 +16,7 @@ object VoiceJoinTrigger: Trigger(
     val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI)
 
     override suspend fun register(kordInstance: Kord) {
-        kordInstance.on<VoiceStateUpdateEvent> {
+        kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
             val member = state.getMember()
             if(state.channelId == null ||
                 member.isBot ||
@@ -25,7 +25,7 @@ object VoiceJoinTrigger: Trigger(
                 changedMute(oldState = this.old, newState = this.state) ||
                 changedStreaming(oldState = this.old, newState = this.state)
             ) {
-                return@on
+                return@onIgnoringBots
             }
             val sound = randomSoundList.random()
             member.getVoiceState().getChannelOrNull()?.let {

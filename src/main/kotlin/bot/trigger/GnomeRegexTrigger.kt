@@ -1,9 +1,9 @@
 package bot.trigger
 
 import bot.constants.GNOME_ASCII
+import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
-import dev.kord.core.on
 
 object GnomeRegexTrigger: Trigger(
     name = "Gnome Regex",
@@ -13,8 +13,7 @@ object GnomeRegexTrigger: Trigger(
     val regex = Regex(".*g.*n.*o.*m.*e.*", RegexOption.DOT_MATCHES_ALL)
 
     override suspend fun register(kordInstance: Kord) {
-        kordInstance.on<MessageCreateEvent> {
-            if (message.author?.isBot == true) return@on
+        kordInstance.onIgnoringBots<MessageCreateEvent> {
             val message = this.message.content
             if (message.matches(regex)) {
                 this.message.channel.createMessage(GNOME_ASCII.random())
