@@ -11,7 +11,7 @@ import java.io.FileOutputStream
 enum class Sound(val path: String) {
     WOO("/audio/woo.ogg"),
     SPEECH("/audio/speech.ogg"),
-    WOHOHO("/audio/wohoho.ogg"),
+    LAUGH("/audio/wohoho.ogg"),
     HM_MONKI("/audio/monki.ogg"),
     GNOME_POWER("/audio/gnome_power.ogg");
 
