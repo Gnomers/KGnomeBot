@@ -7,7 +7,7 @@ import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
 object GnomeRegexTrigger: Trigger(
-    name = "Gnome Regex",
+    name = "gnome_regex",
     description = "Sends out a gnome ascii when theres a g*n*o*m*e message"
 ) {
     // I have no idea what I'm doing
