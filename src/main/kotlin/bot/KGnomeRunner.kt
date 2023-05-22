@@ -3,6 +3,7 @@
  */
 package bot
 
+import bot.constants.DISCORD_TOKEN_ENV_VAR_NAME
 import bot.constants.GNOME_COMMAND_PREFIX
 import bot.core.CommandHandler
 import bot.core.TriggerRegistrator
@@ -15,9 +16,12 @@ import dev.kord.gateway.PrivilegedIntent
 
 private lateinit var kordInstance: Kord
 
+class KGnomeRunner
 suspend fun main(vararg args: String) {
 
-    kordInstance = Kord(token = args.firstOrNull() ?: error("token required"))
+    kordInstance = Kord(token = args.firstOrNull()
+        ?: System.getenv(DISCORD_TOKEN_ENV_VAR_NAME)
+        ?: error("token required"))
 
     kordInstance.onIgnoringBots<MessageCreateEvent> {
         val content = this.message.content
