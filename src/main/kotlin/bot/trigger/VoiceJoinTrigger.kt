@@ -13,7 +13,7 @@ object VoiceJoinTrigger: Trigger(
     name = "channel_joined",
     description = "Sends out a woo or monki when someone joins the chat"
 ) {
-    val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI)
+    val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS)
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
