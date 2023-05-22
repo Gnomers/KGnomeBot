@@ -5,25 +5,38 @@ import com.sedmelluq.discord.lavaplayer.source.local.LocalSeekableInputStream
 import com.sedmelluq.discord.lavaplayer.track.AudioReference
 import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder
 import java.io.File
+import java.io.FileOutputStream
 
 
-enum class Sound(val file: File) {
-    WOO("/audio/woo.ogg".toFile()),
-    SPEECH("/audio/speech.ogg".toFile()),
-    WOHOHO("/audio/wohoho.ogg".toFile()),
-    HM_MONKI("/audio/monki.ogg".toFile()),
-    GNOME_POWER("/audio/gnome_power.ogg".toFile());
+enum class Sound(val path: String) {
+    WOO("/audio/woo.ogg"),
+    SPEECH("/audio/speech.ogg"),
+    WOHOHO("/audio/wohoho.ogg"),
+    HM_MONKI("/audio/monki.ogg"),
+    GNOME_POWER("/audio/gnome_power.ogg");
 
     fun getTrack(): OggAudioTrack =
-        this.file.toOggAudioTrack()
+        accessResourceAsFile(this.path)
+            .toOggAudioTrack()
+
 }
-
-private fun String.toFile(): File =
-    File(Sound::class.java.getResource(this).file)
-
 private fun File.toOggAudioTrack(): OggAudioTrack {
     val localSeekableInputStream = LocalSeekableInputStream(this)
     val trackInfo = AudioTrackInfoBuilder.create(AudioReference.NO_TRACK, localSeekableInputStream).build()
 
     return OggAudioTrack(trackInfo, localSeekableInputStream)
+}
+
+private fun accessResourceAsFile(resourceName: String): File {
+    // If it doesn't exist, please fix it
+    val resourceUrl = object {}.javaClass.getResource(resourceName)!!
+
+    val inputStream = resourceUrl.openStream()
+    val tempFile = File.createTempFile("temp", null)
+
+    FileOutputStream(tempFile).use { outputStream ->
+        inputStream.copyTo(outputStream)
+    }
+
+    return tempFile
 }
