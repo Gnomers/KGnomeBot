@@ -4,7 +4,7 @@ steps:
       - --destination=gcr.io/$PROJECT_ID/gnome
       - --cache=true
       - --cache-ttl=1h
-      - --build-arg=DISCORD_AUTH_TOKEN
+      - $DISCORD_AUTH_TOKEN
     env:
       - 'DISCORD_AUTH_TOKEN=$_DISCORD_AUTH_TOKEN'
   - name: gcr.io/cloud-builders/gcloud
