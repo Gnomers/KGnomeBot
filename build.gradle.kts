@@ -36,7 +36,7 @@ tasks.named<Test>("test") {
 tasks {
     jar {
         manifest {
-            attributes["Main-Class"] = application.mainClass
+            attributes["Main-Class"] = "bot.KGnomeRunnerKt"
         }
 
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -49,11 +49,5 @@ tasks {
     compileKotlin {
         kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.ExperimentalStdlibApi"
         kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-}
-
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "bot.KGnomeRunnerKt"
     }
 }
