@@ -8,7 +8,7 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 object GnomeRegexTrigger: Trigger(
     name = "gnome_regex",
-    description = "Sends out a gnome ascii when theres a g*n*o*m*e message"
+    description = "Sends out a gnome ascii when theres a `g*n*o*m*e` message"
 ) {
     // I have no idea what I'm doing
     val regex = Regex(".*g.*n.*o.*m.*e.*", RegexOption.DOT_MATCHES_ALL)
