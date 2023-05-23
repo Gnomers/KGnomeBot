@@ -8,6 +8,6 @@ class StopCommand: Command(
     description = "Stops current sound"
 ) {
     override suspend fun invoke(event: MessageCreateEvent) {
-        SoundPlayerManager.stop()
+        SoundPlayerManager.stop(event.guildId!!)
     }
 }
