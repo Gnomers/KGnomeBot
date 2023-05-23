@@ -20,6 +20,8 @@ dependencies {
 
     // Audio player
     implementation("com.sedmelluq:lavaplayer:1.3.73")
+
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 }
 
 java {

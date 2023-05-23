@@ -6,6 +6,7 @@ package bot
 import bot.constants.DISCORD_TOKEN_ENV_VAR_NAME
 import bot.constants.GNOME_COMMAND_PREFIX
 import bot.core.CommandHandler
+import bot.core.JobRegistrator
 import bot.core.TriggerRegistrator
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
@@ -13,14 +14,15 @@ import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.kordLogger
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
+import io.github.cdimascio.dotenv.dotenv
+
 
 private lateinit var kordInstance: Kord
 
 class KGnomeRunner
 suspend fun main(vararg args: String) {
-
     kordInstance = Kord(token = args.firstOrNull()
-        ?: System.getenv(DISCORD_TOKEN_ENV_VAR_NAME)
+        ?: dotenv()[DISCORD_TOKEN_ENV_VAR_NAME]
         ?: error("token required"))
 
     kordInstance.onIgnoringBots<MessageCreateEvent> {
@@ -37,6 +39,8 @@ suspend fun main(vararg args: String) {
     }
 
     TriggerRegistrator.registerTriggers()
+    JobRegistrator.registerJobs()
+    CommandHandler.registerCommands()
 
     kordInstance.login {
         // we need to specify this to receive the content of messages

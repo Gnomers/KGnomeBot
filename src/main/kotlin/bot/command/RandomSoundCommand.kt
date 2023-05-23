@@ -4,11 +4,11 @@ import bot.core.voice.SoundPlayerManager
 import bot.utilities.Sound
 import dev.kord.core.event.message.MessageCreateEvent
 
-class SpeechCommand: Command(
-    name = "speech",
-    description = "Says the famous \"I'm gnot a gnelf\" speech"
+class RandomSoundCommand: Command(
+    name = "random",
+    description = "Plays a random sound"
 ) {
     override suspend fun invoke(event: MessageCreateEvent) {
-        SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.SPEECH)
+        SoundPlayerManager.playSoundForMessage(event, Sound.values().random())
     }
 }

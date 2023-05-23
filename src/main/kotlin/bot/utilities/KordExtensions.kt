@@ -1,6 +1,7 @@
 package bot.utilities
 
 import dev.kord.core.Kord
+import dev.kord.core.entity.Guild
 import dev.kord.core.event.Event
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
@@ -11,6 +12,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -30,3 +32,5 @@ public inline fun <reified T : Event> Kord.onIgnoringBots(
             scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
         }
         .launchIn(scope)
+
+suspend fun Guild.getFirstPopulatedChannel() = this.voiceStates.firstOrNull()?.getChannelOrNull()

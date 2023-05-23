@@ -3,7 +3,7 @@ package bot.command
 import bot.trigger.Trigger
 import dev.kord.core.event.message.MessageCreateEvent
 
-class TriggersCommand: Command(
+class ShowTriggersCommand: Command(
     name = "triggers",
     description = "Shows all current triggers"
 ) {

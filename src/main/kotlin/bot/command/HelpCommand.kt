@@ -6,7 +6,7 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 class HelpCommand: Command(
     name = "help",
-    description = "displays information on all commands"
+    description = "Displays information on all commands"
 ) {
     override suspend fun invoke(event: MessageCreateEvent) {
         var response = StringBuilder()
