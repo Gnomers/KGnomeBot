@@ -11,11 +11,11 @@ import kotlin.random.Random
 
 class RandomSoundJob: Job(
     name = "random_sound_job",
-    description = "sends a random sound",
+    description = "Plays a random sound",
     executionDelaySeconds = 600
 ) {
     val RANDOM_SOUND_CHANCE = 0.15
-    val SOUNDS = listOf(Sound.WOO, Sound.CS, Sound.HM_MONKI)
+    val SOUNDS = listOf(Sound.WOO, Sound.CS, Sound.HM_MONKI, Sound.BIG_OL_FART)
     override suspend fun execute() {
         // Random.nextDouble() returns a double from 0 (inclusive) to 1 (exclusive)
         if(Random.nextDouble() < RANDOM_SOUND_CHANCE) {

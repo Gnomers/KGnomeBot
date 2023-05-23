@@ -8,7 +8,7 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 object GodGauRegexTrigger: Trigger(
     name = "god_regex",
-    description = "Sends out a god, god gau ascii when theres a message containing god"
+    description = "Sends a god, god gau ascii when theres a message containing god"
 ) {
     val regex = Regex(".*god.*", RegexOption.DOT_MATCHES_ALL)
 
