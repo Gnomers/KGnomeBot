@@ -23,7 +23,7 @@ sealed class Job(
         val executionInMillis = executionDelaySeconds * 1000
 
         CoroutineScope( Dispatchers.Default ).async {
-            if (executionInMillis > 0) {
+            if (executionInMillis > 1000) {
                 while (isActive) {
                     execute()
                     delay(executionInMillis)
