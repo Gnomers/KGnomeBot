@@ -6,6 +6,7 @@ package bot
 import bot.constants.DISCORD_TOKEN_ENV_VAR_NAME
 import bot.constants.GNOME_COMMAND_PREFIX
 import bot.core.CommandHandler
+import bot.core.JobRegistrator
 import bot.core.TriggerRegistrator
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
@@ -37,6 +38,7 @@ suspend fun main(vararg args: String) {
     }
 
     TriggerRegistrator.registerTriggers()
+    JobRegistrator.registerJobs()
 
     kordInstance.login {
         // we need to specify this to receive the content of messages
