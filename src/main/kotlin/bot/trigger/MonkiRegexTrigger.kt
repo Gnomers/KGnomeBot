@@ -8,9 +8,9 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 object MonkiRegexTrigger: Trigger(
     name = "monki_regex",
-    description = "Sends a monki ascii when theres a `m*o*n*k` message"
+    description = "Sends a monki ascii when theres a message that reminds of our ape friend"
 ) {
-    val regex = Regex(".*m.*o.*n.*k.*", RegexOption.DOT_MATCHES_ALL)
+    val regex = Regex(".*m.*o.*n.*k.*e.*y|.*m.*o.*n.*k.*i.*|.*m.*a.*c.*a.*c.*o.*|.*m.*a.*m.*a.*c.*o.*", RegexOption.DOT_MATCHES_ALL)
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {
