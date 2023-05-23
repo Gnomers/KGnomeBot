@@ -26,7 +26,7 @@ object JobRegistrator {
             runningJobs[instance.name.lowercase()] = instance
         }
 
-        kordLogger.info("TriggerRegistrator finished with jobs=${runningJobs.values.map { it.name }}")
+        kordLogger.info("JobRegistrator finished with jobs=${runningJobs.values.map { it.name }}")
     }
 }
 
