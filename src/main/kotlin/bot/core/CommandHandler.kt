@@ -10,7 +10,7 @@ object CommandHandler {
     // name -> command class
     val registeredCommands: MutableMap<String, Command> = mutableMapOf()
 
-    init {
+    fun registerCommands() {
         kordLogger.info("Starting CommandHandler")
         Command::class.sealedSubclasses.forEach { clazz ->
             val instance = clazz.constructors.first { it.parameters.isEmpty() }.call()

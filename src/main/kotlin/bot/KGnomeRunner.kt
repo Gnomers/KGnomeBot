@@ -39,6 +39,7 @@ suspend fun main(vararg args: String) {
 
     TriggerRegistrator.registerTriggers()
     JobRegistrator.registerJobs()
+    CommandHandler.registerCommands()
 
     kordInstance.login {
         // we need to specify this to receive the content of messages
