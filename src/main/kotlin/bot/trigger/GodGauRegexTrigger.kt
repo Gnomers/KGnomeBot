@@ -10,7 +10,7 @@ object GodGauRegexTrigger: Trigger(
     name = "god_regex",
     description = "Sends a god, god gau ascii when theres a message containing god"
 ) {
-    val regex = Regex(".*god.*", RegexOption.DOT_MATCHES_ALL)
+    val regex = Regex(".*god.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {
