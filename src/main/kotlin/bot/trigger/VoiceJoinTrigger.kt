@@ -14,7 +14,7 @@ object VoiceJoinTrigger: Trigger(
     name = "channel_joined",
     description = "Sends out a woo or monki when someone joins the chat"
 ) {
-    val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS)
+    val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS, Sound.AMOGUS)
     const val RANDOM_VOICE_JOIN_CHANCE = 0.2 // 20%
 
 
