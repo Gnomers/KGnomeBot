@@ -7,6 +7,8 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.player.event.TrackEndEvent
 import com.sedmelluq.discord.lavaplayer.player.event.TrackExceptionEvent
 import com.sedmelluq.discord.lavaplayer.player.event.TrackStuckEvent
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManager
+import com.sedmelluq.discord.lavaplayer.source.local.LocalAudioSourceManager
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.BaseVoiceChannelBehavior
@@ -16,6 +18,7 @@ import dev.kord.core.kordLogger
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.VoiceConnection
 import kotlinx.coroutines.runBlocking
+
 
 @OptIn(KordVoice::class)
 object SoundPlayerManager {
@@ -31,6 +34,7 @@ object SoundPlayerManager {
             connections.remove(guildId)!!.shutdown()
         }
         val player = createPlayer()
+
         player.playTrack(sound.getTrack())
 
         runCatching {
@@ -58,14 +62,21 @@ object SoundPlayerManager {
         playSoundOnChannel(voiceChannel, sound)
     }
 
-    private fun createPlayer() = DefaultAudioPlayerManager().createPlayer().apply {
-        this.addListener {
-            when(it) {
-                is TrackEndEvent, is TrackExceptionEvent, is TrackStuckEvent -> runBlocking {
-                    stop(players[it.player]!!.data.guildId)
+    private fun createPlayer(): AudioPlayer {
+        val sourceManager: AudioSourceManager = LocalAudioSourceManager()
+
+        return DefaultAudioPlayerManager()
+            .also { it.registerSourceManager(sourceManager) }
+            .createPlayer()
+            .apply {
+                this.addListener {
+                    when (it) {
+                        is TrackEndEvent, is TrackExceptionEvent, is TrackStuckEvent -> runBlocking {
+                            stop(players[it.player]!!.data.guildId)
+                        }
+                    }
                 }
             }
-        }
     }
 
     suspend fun stop(guildId: Snowflake) {
