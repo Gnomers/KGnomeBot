@@ -1,42 +1,42 @@
 package bot.utilities
 
+import bot.core.exception.UnknownFileFormatExcpetion
+import com.sedmelluq.discord.lavaplayer.container.mp3.Mp3AudioTrack
 import com.sedmelluq.discord.lavaplayer.container.ogg.OggAudioTrack
-import com.sedmelluq.discord.lavaplayer.source.local.LocalSeekableInputStream
+import com.sedmelluq.discord.lavaplayer.tools.io.NonSeekableInputStream
 import com.sedmelluq.discord.lavaplayer.track.AudioReference
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder
-import java.io.File
-import java.io.FileOutputStream
 
 
 enum class Sound(val path: String) {
-    WOO("/audio/woo.ogg"),
-    BIG_OL_FART("/audio/big_ol_fart.ogg"),
-    HM_MONKI("/audio/monki.ogg"),
-    CS("/audio/ce_ess.ogg"),
-    GNOME_POWER("/audio/gnome_power.ogg");
+    WOO("audio/woo.ogg"),
+    BIG_OL_FART("audio/big_ol_fart.ogg"),
+    HM_MONKI("audio/monki.ogg"),
+    CS("audio/ce_ess.ogg"),
+    GNOME_POWER("audio/gnome_power.ogg"),
+    AMOGUS("audio/amogus.mp3");
 
-    fun getTrack(): OggAudioTrack =
-        accessResourceAsFile(this.path)
-            .toOggAudioTrack()
+    fun getTrack(): AudioTrack {
+        val nonSeekableInputStream = NonSeekableInputStream(
+            this::class.java.classLoader.getResourceAsStream(this.path)
+        )
+        val audioTrackInfo = AudioTrackInfoBuilder.create(AudioReference.NO_TRACK, nonSeekableInputStream).build()
 
-}
-private fun File.toOggAudioTrack(): OggAudioTrack {
-    val localSeekableInputStream = LocalSeekableInputStream(this)
-    val trackInfo = AudioTrackInfoBuilder.create(AudioReference.NO_TRACK, localSeekableInputStream).build()
+        return when(this.path.split(".").last()) {
+            "ogg" -> OggAudioTrack(
+                audioTrackInfo,
+                nonSeekableInputStream
+            )
 
-    return OggAudioTrack(trackInfo, localSeekableInputStream)
-}
+            "mp3" -> Mp3AudioTrack(
+                audioTrackInfo,
+                nonSeekableInputStream
+            )
 
-private fun accessResourceAsFile(resourceName: String): File {
-    // If it doesn't exist, please fix it
-    val resourceUrl = object {}.javaClass.getResource(resourceName)!!
-
-    val inputStream = resourceUrl.openStream()
-    val tempFile = File.createTempFile("temp", null)
-
-    FileOutputStream(tempFile).use { outputStream ->
-        inputStream.copyTo(outputStream)
+            else -> throw UnknownFileFormatExcpetion("File format \"${this.path}\" unrecognized")
+        }
     }
 
-    return tempFile
+    private fun String.fileFormat() = this.drop(1)
 }
