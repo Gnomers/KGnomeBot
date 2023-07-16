@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.8.10"
+    id("org.jetbrains.kotlin.jvm") version "1.9.0"
     application
 }
 
@@ -22,6 +22,10 @@ dependencies {
     implementation("com.sedmelluq:lavaplayer:1.3.73")
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+
+    // HTTP
+    implementation("com.squareup.okhttp:okhttp:2.7.5")
+
 }
 
 java {
