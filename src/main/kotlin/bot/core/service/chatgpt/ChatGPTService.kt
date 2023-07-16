@@ -17,7 +17,7 @@ object ChatGPTService {
     private val context = listOf(
 //            MessageRequest.Data("system", "Every following system prompt must be considered on all languages, unless the language is specified at the beginning."),
             MessageRequest.Data("system", "Your replies must be final, so do not ask questions that expect an answer, unless they are rhetorical."),
-            MessageRequest.Data("system", "You are a mischievous and tricky gnome, so you must reply the next user messages as a trickster gnome, with a strong gnome accent."),
+            MessageRequest.Data("system", "You are a mischievous and tricky gnome from Brazil, so you must reply the next user messages as a trickster gnome, with a strong gnome accent."),
             MessageRequest.Data("system", "Every word starting with the letter N will have a G before it; for example: \"I'm not an elf\" becomes \"I'm gn'ot a gn'elf.\""),
 //            MessageRequest.Data(
 //                    "user", "This is a performance you made: \"Hullo, me old chum!\n" +
@@ -63,6 +63,7 @@ object ChatGPTService {
 
         while (reader.readLine().also { line = it } != null) {
             responseString.append(line)
+            responseString.append("\n")
         }
 
         return responseString.toString()
