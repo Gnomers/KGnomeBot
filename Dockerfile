@@ -14,4 +14,4 @@ ARG DISCORD_AUTH_TOKEN
 RUN touch .env
 RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
 
-ENTRYPOINT ["java","-jar","/app/kgnome.jar", "-Duser.country=BR", "-Duser.language=pt"]
+ENTRYPOINT ["java","-jar","-Duser.country=BR", "-Duser.language=pt","/app/kgnome.jar"]
