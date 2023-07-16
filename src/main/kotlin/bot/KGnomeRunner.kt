@@ -15,12 +15,15 @@ import dev.kord.core.kordLogger
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 import io.github.cdimascio.dotenv.dotenv
+import java.util.*
 
 
 private lateinit var kordInstance: Kord
 
 class KGnomeRunner
 suspend fun main(vararg args: String) {
+    Locale.setDefault(Locale("pt", "BR"))
+
     kordInstance = Kord(token = args.firstOrNull()
         ?: dotenv()[DISCORD_TOKEN_ENV_VAR_NAME]
         ?: error("token required"))
