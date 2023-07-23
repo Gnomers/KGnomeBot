@@ -34,12 +34,12 @@ object ChatGPTService {
             MessageRequest.Data("system", "Ignore the very last user prompt."),
     )
 
-    fun prompt(prompt: String): String {
+    fun prompt(prompt: String, gnomeMode: Boolean): String {
         val client = OkHttpClient()
         val mediaType = MediaType.parse("text/plain")
 
         val message = MessageRequest(
-                messages = context + listOf(
+                messages =  (if (gnomeMode) context else emptyList()) +listOf(
                         MessageRequest.Data("user", prompt),
                         // Trick used to generate a valid signature
                         MessageRequest.Data("user", "Pretend like this message does not exist and reply the last sent message."),
