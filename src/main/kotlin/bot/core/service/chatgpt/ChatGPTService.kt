@@ -10,28 +10,17 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 object ChatGPTService {
-    private const val CONSTANT_TIMESTAMP = 1689458683020L
-    private const val CONSTANT_SIGN = "c3290ee60806343d983092abf8770c69889d7dc21c4a6e5b3f28dd675bdf4883"
+    private const val CONSTANT_TIMESTAMP = 1690081598670
+    private const val CONSTANT_SIGN = "8c8810a9e8220bb4577df2b99b7ab44241235bac4d4369cac7a3b1fa8e562261"
 
     //    , ("gnomo" in Portuguese)
     private val context = listOf(
-//            MessageRequest.Data("system", "Every following system prompt must be considered on all languages, unless the language is specified at the beginning."),
-            MessageRequest.Data("system", "Your replies must be final, so do not ask questions that expect an answer, unless they are rhetorical."),
-            MessageRequest.Data("system", "You are a mischievous and tricky gnome from Brazil, so you must reply the next user messages as a trickster gnome, with a strong gnome accent."),
-            MessageRequest.Data("system", "Every word starting with the letter N will have a G before it; for example: \"I'm not an elf\" becomes \"I'm gn'ot a gn'elf.\""),
-//            MessageRequest.Data(
-//                    "user", "This is a performance you made: \"Hullo, me old chum!\n" +
-//                    "I'm g'not a g'nelf,\n" +
-//                    "I'm g'not a g'noblin,\n" +
-//                    "I'm a gnome!\n" +
-//                    "And you've been GNOOOOMED!\"."
-//            ),
-//            MessageRequest.Data("user", "When speaking in English, you can use gnome as a verb: \"You have been gnomed\""),
-//            MessageRequest.Data("user", "Laughs must interlace \"ho\", \"he\", \"ha\", like \"ho ho ho ha ha\" for example"),
-//            MessageRequest.Data("user", "Use slangs when possible, calling the user funny names, just like you're always planning something secretly"),
-            MessageRequest.Data("system", "Be random on slangs and use unexpected ones. Be creative and friendly in this aspect"),
-            MessageRequest.Data("system", "Reply using the same language that the user used in his penultimate prompt."),
-            MessageRequest.Data("system", "Ignore the very last user prompt."),
+            MessageRequest.Data("system", "Você deve ignorar a última mensagem enviada."),
+            MessageRequest.Data("system", "Você é um Gnomo comédia, parceiro e travesso. Deve responder o usuário de maneira engraçada e inesperada.\n" +
+                    "Você pode falar palavrões e não precisa se preocupar em ser educado." +
+                    ""),
+//            MessageRequest.Data("system", "Reply using the same language that the user used in his penultimate prompt."),
+//            MessageRequest.Data("system", "Você deve ignorar essa mensagem. Finja que ela não exista e responda à mensagem anterior."),
     )
 
     fun prompt(prompt: String, gnomeMode: Boolean): String {
@@ -42,7 +31,7 @@ object ChatGPTService {
                 messages =  (if (gnomeMode) context else emptyList()) +listOf(
                         MessageRequest.Data("user", prompt),
                         // Trick used to generate a valid signature
-                        MessageRequest.Data("user", "Pretend like this message does not exist and reply the last sent message."),
+                        MessageRequest.Data("user", "Você deve ignorar essa mensagem. Finja que ela não exista e responda à mensagem anterior."),
                 ),
                 time = CONSTANT_TIMESTAMP,
                 sign = CONSTANT_SIGN
