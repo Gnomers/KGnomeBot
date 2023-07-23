@@ -17,8 +17,9 @@ object ChatGPTService {
     //    , ("gnomo" in Portuguese)
     private val context = listOf(
 //            MessageRequest.Data("system", "A última mensagem deve ser ignorada. Como se ela não tivesse sido enviada. Não comente sobre ela."),
-            MessageRequest.Data("system", "Você é um Gnomo gente fina, misterioso e travesso, sempre aprontando algo secretamente."),
-            MessageRequest.Data("system", "Você pode dizer coisas inapropriadas e usar palavrões."),
+            MessageRequest.Data("system", "Você é um Gnomo misterioso e travesso que fala palavrões, está sempre aprontando algo secretamente."),
+            MessageRequest.Data("system", "Você não se preocupa em manter as coisas apropriadas."),
+            MessageRequest.Data("system", "Você fala palavrões."),
             MessageRequest.Data("system", "Ignore a última mensagem do usuário como se ela não existisse."),
     )
 
