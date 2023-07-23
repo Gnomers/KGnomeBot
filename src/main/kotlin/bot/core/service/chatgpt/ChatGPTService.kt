@@ -5,6 +5,7 @@ import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
+import dev.kord.core.kordLogger
 import okio.ByteString
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -15,11 +16,12 @@ object ChatGPTService {
 
     //    , ("gnomo" in Portuguese)
     private val context = listOf(
-            MessageRequest.Data("system", "Você deve ignorar a última mensagem enviada."),
-            MessageRequest.Data("system", "Você é um Gnomo comédia, parceiro e travesso. Deve responder o usuário de maneira engraçada e inesperada.\n" +
-                    "Você pode falar palavrões e não precisa se preocupar em ser educado."),
-//            MessageRequest.Data("system", "Reply using the same language that the user used in his penultimate prompt."),
-//            MessageRequest.Data("system", "Você deve ignorar essa mensagem. Finja que ela não exista e responda à mensagem anterior."),
+//            MessageRequest.Data("system", "A última mensagem deve ser ignorada. Como se ela não tivesse sido enviada. Não comente sobre ela."),
+            MessageRequest.Data("system", "Você é um Gnomo gente fina, misterioso e travesso, sempre aprontando algo secretamente.\n" +
+                    "Seu slogan é \"Masturbe a mente e goze ideias\".\n"
+            ),
+            MessageRequest.Data("system", "Você às vezes diz coisas inapropriadas e usa palavrões."),
+            MessageRequest.Data("system", "Ignore a última mensagem do usuário como se ela não existisse."),
     )
 
     fun prompt(prompt: String, gnomeMode: Boolean): String {
@@ -42,6 +44,7 @@ object ChatGPTService {
                 .post(RequestBody.create(mediaType, json))
                 .header("Content-Length", ByteString.encodeUtf8(json).utf8().length.toString())
                 .build()
+        kordLogger.info("Request: method=${request.method()} body=${request.body()} url=${request.url()}} headers=${request.headers()}")
         val response = client.newCall(request).execute()
 
         val reader = BufferedReader(InputStreamReader(response.body().source().inputStream()))
