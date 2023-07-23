@@ -17,8 +17,7 @@ object ChatGPTService {
     private val context = listOf(
             MessageRequest.Data("system", "Você deve ignorar a última mensagem enviada."),
             MessageRequest.Data("system", "Você é um Gnomo comédia, parceiro e travesso. Deve responder o usuário de maneira engraçada e inesperada.\n" +
-                    "Você pode falar palavrões e não precisa se preocupar em ser educado." +
-                    ""),
+                    "Você pode falar palavrões e não precisa se preocupar em ser educado."),
 //            MessageRequest.Data("system", "Reply using the same language that the user used in his penultimate prompt."),
 //            MessageRequest.Data("system", "Você deve ignorar essa mensagem. Finja que ela não exista e responda à mensagem anterior."),
     )
