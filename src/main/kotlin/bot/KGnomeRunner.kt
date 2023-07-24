@@ -24,9 +24,11 @@ class KGnomeRunner
 suspend fun main(vararg args: String) {
     Locale.setDefault(Locale("pt", "BR"))
 
-    kordInstance = Kord(token = args.firstOrNull()
-        ?: dotenv()[DISCORD_TOKEN_ENV_VAR]
-        ?: error("token required"))
+    kordInstance = Kord(
+        token = args.firstOrNull().also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
+        ?: dotenv()[DISCORD_TOKEN_ENV_VAR].also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
+        ?: error("token required")
+    )
 
     kordInstance.onIgnoringBots<MessageCreateEvent> {
         val content = this.message.content
