@@ -5,7 +5,9 @@ steps:
       - --cache=true
       - --cache-ttl=1h
       - --build-arg=DISCORD_AUTH_TOKEN
+      - --build-arg=HUGGING_FACE_AUTH_TOKEN
     env:
       - 'DISCORD_AUTH_TOKEN=$_DISCORD_AUTH_TOKEN'
+      - 'HUGGING_FACE_AUTH_TOKEN=$_HUGGING_FACE_AUTH_TOKEN'
   - name: gcr.io/cloud-builders/gcloud
     args: [ compute, instance-groups, managed, rolling-action, restart, gnome-docker, --zone=us-central1-a ]
