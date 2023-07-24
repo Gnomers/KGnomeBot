@@ -13,5 +13,6 @@ COPY --from=build /home/gradle/src/build/libs/ /app/
 ARG DISCORD_AUTH_TOKEN
 RUN touch .env
 RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
+RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env
 
 ENTRYPOINT ["java","-jar","-Duser.country=BR", "-Duser.language=pt","/app/kgnome.jar"]
