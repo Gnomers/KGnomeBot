@@ -37,7 +37,7 @@ object ChatGPTService {
         val mediaType = MediaType.parse("text/plain")
 
         val message = MessageRequest(
-                messages =  (if (gnomeMode) context else emptyList()) +listOf(
+                messages = (if (gnomeMode) context else emptyList()) + listOf(
                         MessageRequest.Data("user", prompt),
                         // Trick used to generate a valid signature
                         MessageRequest.Data("system", IGNORED_MESSAGE),
