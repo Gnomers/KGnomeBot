@@ -3,7 +3,7 @@
  */
 package bot
 
-import bot.constants.DISCORD_TOKEN_ENV_VAR_NAME
+import bot.constants.DISCORD_TOKEN_ENV_VAR
 import bot.constants.GNOME_COMMAND_PREFIX
 import bot.core.CommandHandler
 import bot.core.JobRegistrator
@@ -25,7 +25,7 @@ suspend fun main(vararg args: String) {
     Locale.setDefault(Locale("pt", "BR"))
 
     kordInstance = Kord(token = args.firstOrNull()
-        ?: dotenv()[DISCORD_TOKEN_ENV_VAR_NAME]
+        ?: dotenv()[DISCORD_TOKEN_ENV_VAR]
         ?: error("token required"))
 
     kordInstance.onIgnoringBots<MessageCreateEvent> {
