@@ -15,7 +15,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import org.apache.http.HttpStatus
 
 object ImageDescriptorService {
-    private val TOKEN = dotenv()[HUGGING_FACE_TOKEN_ENV_VAR] ?: null
+    private val TOKEN = (dotenv()[HUGGING_FACE_TOKEN_ENV_VAR] ?: null).also { kordLogger.info("$HUGGING_FACE_TOKEN_ENV_VAR length=${it?.length}") }
 
     val models = mapOf(
         // accurate
