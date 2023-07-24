@@ -15,7 +15,9 @@ import kotlinx.serialization.json.jsonPrimitive
 import org.apache.http.HttpStatus
 
 object ImageDescriptorService {
-    private val TOKEN = (dotenv()[HUGGING_FACE_TOKEN_ENV_VAR] ?: null).also { kordLogger.info("$HUGGING_FACE_TOKEN_ENV_VAR length=${it?.length}") }
+    private val TOKEN = (dotenv()[HUGGING_FACE_TOKEN_ENV_VAR] ?: null)
+        ?.also { kordLogger.info("$HUGGING_FACE_TOKEN_ENV_VAR length=${it.length}") }
+        ?: also { kordLogger.info("$HUGGING_FACE_TOKEN_ENV_VAR is null") }
 
     val models = mapOf(
         // accurate
@@ -56,14 +58,14 @@ object ImageDescriptorService {
 
             finalResponse.append(
                 when (statusCode) {
-                    HttpStatus.SC_SERVICE_UNAVAILABLE -> return "He he he, I'm thinking... please wait and ask again!"
+                    HttpStatus.SC_SERVICE_UNAVAILABLE -> "He he he, I'm thinking... please wait and ask again!"
                     HttpStatus.SC_OK -> Json.parseToJsonElement(responseBody)
                         .jsonArray.first()
                         .jsonObject["generated_text"]
                         ?.jsonPrimitive
-                        ?.content ?: "I have no idea what that is, old chum."
+                        ?.content ?: "I have no idea what that is, old chum. Maybe you were gnomed?"
 
-                    else -> "I have no idea what that is, old chum."
+                    else -> "I have no idea what that is, old chum. Maybe you were gnomed?"
                 }
             )
             finalResponse.appendLine()

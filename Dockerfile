@@ -11,6 +11,7 @@ COPY --from=build /home/gradle/src/build/libs/ /app/
 
 # Setup env vars
 ARG DISCORD_AUTH_TOKEN
+ARG HUGGING_FACE_AUTH_TOKEN
 RUN touch .env
 RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
 RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env

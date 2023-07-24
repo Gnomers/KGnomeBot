@@ -25,8 +25,8 @@ suspend fun main(vararg args: String) {
     Locale.setDefault(Locale("pt", "BR"))
 
     kordInstance = Kord(
-        token = args.firstOrNull().also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
-        ?: dotenv()[DISCORD_TOKEN_ENV_VAR].also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
+        token = args.firstOrNull()?.also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
+        ?: dotenv()[DISCORD_TOKEN_ENV_VAR]?.also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
         ?: error("token required")
     )
 
