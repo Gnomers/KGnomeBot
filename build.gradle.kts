@@ -6,6 +6,7 @@ plugins {
 repositories {
     mavenCentral()
     jcenter()
+    maven(url = "https://m2.dv8tion.net/releases")
 }
 
 dependencies {
@@ -19,7 +20,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.3")
 
     // Audio player
-    implementation("com.sedmelluq:lavaplayer:1.3.73")
+    implementation("com.sedmelluq:lavaplayer:1.3.77")
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 
