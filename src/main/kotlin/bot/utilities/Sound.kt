@@ -37,6 +37,4 @@ enum class Sound(val path: String) {
             else -> throw UnknownFileFormatExcpetion("File format \"${this.path}\" unrecognized")
         }
     }
-
-    private fun String.fileFormat() = this.drop(1)
 }
