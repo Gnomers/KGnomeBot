@@ -1,6 +1,7 @@
 package bot.core.service.imagedescriptor
 
 import bot.constants.HUGGING_FACE_TOKEN_ENV_VAR
+import bot.utilities.buildDefault
 import bot.utilities.isValidURL
 import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.OkHttpClient
@@ -34,7 +35,7 @@ object ImageDescriptorService {
         if (!imageUrl.isValidURL()) return "Hello there, old chum, this URL doesn't seem quite right! Ho ho he ha ha"
         if (TOKEN == null) return "Hello there, old chum, this feature isn't ready yet!"
 
-        val client = OkHttpClient()
+        val client = OkHttpClient().buildDefault()
         val body = RequestBody.create(MediaType.parse("text/plain"), imageUrl)
 
         val finalResponse = StringBuilder()

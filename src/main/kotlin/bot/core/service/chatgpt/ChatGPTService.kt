@@ -1,5 +1,6 @@
 package bot.core.service.chatgpt
 
+import bot.utilities.buildDefault
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.OkHttpClient
@@ -30,7 +31,7 @@ object ChatGPTService {
     )
 
     fun prompt(prompt: String, gnomeMode: Boolean): String {
-        val client = OkHttpClient()
+        val client = OkHttpClient().buildDefault()
         val mediaType = MediaType.parse("text/plain")
 
         val message = MessageRequest(
