@@ -9,6 +9,8 @@ import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
 import dev.kord.core.kordLogger
 import io.github.cdimascio.dotenv.dotenv
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -31,47 +33,52 @@ object ImageDescriptorService {
 
     // not accurate but funny
     const val URL = "https://api-inference.huggingface.co/models/nlpconnect/vit-gpt2-image-captioning"
-    fun describe(imageUrl: String): String {
+    suspend fun describe(imageUrl: String): String {
         if (!imageUrl.isValidURL()) return "Hello there, old chum, this URL doesn't seem quite right! Ho ho he ha ha"
         if (TOKEN == null) return "Hello there, old chum, this feature isn't ready yet!"
 
         val client = OkHttpClient().buildDefault()
         val body = RequestBody.create(MediaType.parse("text/plain"), imageUrl)
 
-        val finalResponse = StringBuilder()
-        models.forEach {
-            finalResponse.append("${it.key}: ")
+        val responses = mutableListOf<String>()
+        coroutineScope {
+            models.forEach {
+                launch {
+                    val thisResponse = StringBuilder()
+                    thisResponse.append("${it.key}: ")
 
-            val request = Request.Builder()
-                .url(it.value)
-                .post(body)
-                .addHeader("Authorization", "Bearer $TOKEN")
-                .addHeader("Content-Type", "text/plain")
-                .build()
+                    val request = Request.Builder()
+                        .url(it.value)
+                        .post(body)
+                        .addHeader("Authorization", "Bearer $TOKEN")
+                        .addHeader("Content-Type", "text/plain")
+                        .build()
 
-            kordLogger.info("Request: method=${request.method()} body=${request.body()} url=${request.url()}}")
+                    kordLogger.info("Request: method=${request.method()} body=${request.body()} url=${request.url()}}")
 
-            val response = client.newCall(request).execute()
-            val responseBody = response.body().string()
-            val statusCode = response.code()
+                    val response = client.newCall(request).execute()
+                    val responseBody = response.body().string()
+                    val statusCode = response.code()
 
-            kordLogger.info("Response: status=${statusCode} body=$responseBody")
+                    kordLogger.info("Response: status=${statusCode} body=$responseBody")
 
-            finalResponse.append(
-                when (statusCode) {
-                    HttpStatus.SC_SERVICE_UNAVAILABLE -> "He he he, I'm thinking... please wait and ask again!"
-                    HttpStatus.SC_OK -> Json.parseToJsonElement(responseBody)
-                        .jsonArray.first()
-                        .jsonObject["generated_text"]
-                        ?.jsonPrimitive
-                        ?.content ?: "I have no idea what that is, old chum. Maybe you were gnomed?"
+                    thisResponse.append(
+                        when (statusCode) {
+                            HttpStatus.SC_SERVICE_UNAVAILABLE -> "He he he, I'm thinking... please wait and ask again!"
+                            HttpStatus.SC_OK -> Json.parseToJsonElement(responseBody)
+                                .jsonArray.first()
+                                .jsonObject["generated_text"]
+                                ?.jsonPrimitive
+                                ?.content ?: "I have no idea what that is, old chum. Maybe you were gnomed?"
 
-                    else -> "I have no idea what that is, old chum. Maybe you were gnomed?"
+                            else -> "I have no idea what that is, old chum. Maybe you were gnomed?"
+                        }
+                    )
+                    responses.add(thisResponse.toString())
                 }
-            )
-            finalResponse.appendLine()
+            }
         }
 
-        return finalResponse.toString()
+        return responses.joinToString("\n")
     }
 }
