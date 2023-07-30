@@ -115,6 +115,7 @@ object SoundPlayerManager {
                 this.addListener {
                     when (it) {
                         is TrackEndEvent, is TrackExceptionEvent, is TrackStuckEvent -> runBlocking {
+                            kordLogger.error("An error occurred while playing an Audio. error=$it")
                             stop(players[it.player]!!.data.guildId)
                         }
                     }
