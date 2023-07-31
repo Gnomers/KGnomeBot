@@ -15,6 +15,7 @@ enum class Sound(val path: String) {
     HM_MONKI("audio/monki.ogg"),
     CS("audio/ce_ess.ogg"),
     GNOME_POWER("audio/gnome_power.ogg"),
+    BANDIDO("audio/risadinha_de_bandido.mp3"),
     AMOGUS("audio/amogus.mp3");
 
     fun getTrack(): AudioTrack {

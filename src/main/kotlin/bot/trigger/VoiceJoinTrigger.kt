@@ -1,11 +1,7 @@
 package bot.trigger
 
 import bot.core.voice.SoundPlayerManager
-import bot.utilities.Sound
-import bot.utilities.changedDeaf
-import bot.utilities.changedMute
-import bot.utilities.changedStreaming
-import bot.utilities.onIgnoringBots
+import bot.utilities.*
 import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlin.random.Random
@@ -14,7 +10,7 @@ object VoiceJoinTrigger: Trigger(
     name = "channel_joined",
     description = "Sends out a woo or monki when someone joins the chat"
 ) {
-    val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS, Sound.AMOGUS)
+    val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS, Sound.AMOGUS, Sound.BANDIDO)
     const val RANDOM_VOICE_JOIN_CHANCE = 0.2 // 20%
 
 
