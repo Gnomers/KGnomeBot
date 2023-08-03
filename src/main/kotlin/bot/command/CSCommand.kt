@@ -8,7 +8,7 @@ class CSCommand: Command(
     name = "cs",
     description = "\"CS?\" - Brutal1804"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.CS)
     }
 }

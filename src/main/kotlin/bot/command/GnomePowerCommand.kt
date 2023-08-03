@@ -8,7 +8,7 @@ class GnomePowerCommand: Command(
     name = "power",
     description = "ADRENALINE IS PUMPING"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.GNOME_POWER)
     }
 }

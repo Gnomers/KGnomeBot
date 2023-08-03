@@ -11,13 +11,13 @@ import java.net.SocketTimeoutException
 
 class DrawCommand: Command(
     name = "draw",
-    description = "Let gnome show you his artistic skills"
+    description = "Let gnome show you his artistic skills",
+    hasSubCommand = true
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
-        val prompt = event.message.content.split("draw ", limit = 2)[1]
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         runCatching {
             event.message.channel.withTyping {
-                val imagesMap = ImageDrawingService.draw(prompt)
+                val imagesMap = ImageDrawingService.draw(subCommand!!)
                 event.message.channel.createMessage {
                     imagesMap.forEach {
                         this.addFile("image-${it.key}.jpeg", ChannelProvider { ByteReadChannel(it.value.data) })

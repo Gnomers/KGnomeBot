@@ -1,6 +1,7 @@
 package bot.core
 
 import bot.command.Command
+import bot.constants.NO_SUBCOMMAND
 import bot.constants.UNKNOWN_COMMAND
 import bot.core.exception.DuplicateClassExcpetion
 import dev.kord.core.event.message.MessageCreateEvent
@@ -35,7 +36,16 @@ object CommandHandler {
             // invoke handler
             registeredCommands.getOrDefault(sentCommand, null)?.let {
                 kordLogger.info("Invoking command=${sentCommand} with content=\"${message.content}\"")
-                it.invoke(event)
+
+                val subCommand = runCatching {
+                    event.message.content.split("${it.name} ", limit = 2)[1]
+                }.getOrNull()
+
+                if (it.hasSubCommand && subCommand != null) {
+                    it.invoke(event, subCommand)
+                } else {
+                    event.message.channel.createMessage(NO_SUBCOMMAND)
+                }
             } ?: event.message.channel.createMessage(UNKNOWN_COMMAND)
         } ?: message.channel.createMessage(bot.constants.NO_COMMAND_ISSUED)
     }

@@ -8,7 +8,7 @@ class AmogusCommand: Command(
     name = "amogus",
     description = "sussy baka"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.AMOGUS)
     }
 }

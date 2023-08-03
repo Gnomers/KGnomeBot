@@ -8,7 +8,7 @@ class PeidaoCommand: Command(
     name = "peidao",
     description = "DEU PRA OUVIR?"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.BIG_OL_FART)
     }
 }

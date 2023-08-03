@@ -6,12 +6,12 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 class ChatGPTCommand: Command(
     name = "gpt",
-    description = "Boring chat without the Gnome magic."
+    description = "Boring chat without the Gnome magic.",
+    hasSubCommand = true
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
-        val message = event.message.content.split("gpt ", limit = 2)[1]
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         event.message.channel.withTyping {
-            event.message.channel.createMessage(ChatGPTService.prompt(message, false))
+            event.message.channel.createMessage(ChatGPTService.prompt(subCommand!!, false))
         }
     }
 }

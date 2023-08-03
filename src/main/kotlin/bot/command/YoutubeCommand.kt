@@ -5,10 +5,10 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 class YoutubeCommand: Command(
     name = "youtube",
-    description = "Let Gnome practice his DJ skills!"
+    description = "Let Gnome practice his DJ skills!",
+    hasSubCommand = true
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
-        val message = event.message.content.split("youtube ", limit = 2)[1]
-        SoundPlayerManager.playYoutubeForMessage(event, message)
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
+        SoundPlayerManager.playYoutubeForMessage(event, subCommand!!)
     }
 }

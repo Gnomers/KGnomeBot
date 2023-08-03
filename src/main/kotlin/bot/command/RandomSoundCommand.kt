@@ -8,7 +8,7 @@ class RandomSoundCommand: Command(
     name = "random",
     description = "Plays a random sound"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event, Sound.values().random())
     }
 }

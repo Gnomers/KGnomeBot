@@ -8,7 +8,7 @@ class BalboaCommand: Command(
     name = "balboa",
     description = "When you need that adrenaline pump!"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.BALBOA)
     }
 }

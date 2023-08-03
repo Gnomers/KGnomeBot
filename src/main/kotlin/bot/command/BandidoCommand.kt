@@ -8,7 +8,7 @@ class BandidoCommand: Command(
     name = "bandido",
     description = "nhiahiahia"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.BANDIDO)
     }
 }

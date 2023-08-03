@@ -6,12 +6,12 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 class GnomeChatCommand: Command(
     name = "chat",
-    description = "Talk with a REAL GNOME - definitely not an AI"
+    description = "Talk with a REAL GNOME - definitely not an AI",
+    hasSubCommand = true
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
-        val message = event.message.content.split("chat ", limit = 2)[1]
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         event.message.channel.withTyping {
-            event.message.channel.createMessage(ChatGPTService.prompt(message, true))
+            event.message.channel.createMessage(ChatGPTService.prompt(subCommand!!, true))
         }
     }
 }

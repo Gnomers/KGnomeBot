@@ -8,7 +8,7 @@ class MonkiCommand: Command(
     name = "monki",
     description = "HMM, MONKI"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.HM_MONKI)
     }
 }

@@ -7,7 +7,7 @@ class ShowJobsCommand: Command(
     name = "jobs",
     description = "Shows all current jobs"
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         var response = StringBuilder()
         response.appendLine("Hello there, old chum! Here are the jobs on this bot:")
         JobRegistrator.runningJobs.values.forEach { job ->

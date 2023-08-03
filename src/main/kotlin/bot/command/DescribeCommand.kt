@@ -7,16 +7,17 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 class DescribeCommand: Command(
     name = "describe",
-    description = "Describes an image"
+    description = "Describes an image",
+    hasSubCommand = true
 ) {
-    override suspend fun invoke(event: MessageCreateEvent) {
+    override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         event.message.channel.withTyping {
             val message = event.message
             val attachment = message.attachments.firstOrNull()
             val url = attachment?.let {
                 if (it.isImage) it.url
                 else null
-            } ?: message.content.split("describe ", limit = 2).last()
+            } ?: subCommand!!
 
             if (url.isValidURL()) {
                 val description = ImageDescriptorService.describe(url)
