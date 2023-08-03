@@ -1,5 +1,6 @@
-package bot.command
+package bot.command.sound.simple
 
+import bot.command.Command
 import bot.core.voice.SoundPlayerManager
 import bot.utilities.Sound
 import dev.kord.core.event.message.MessageCreateEvent

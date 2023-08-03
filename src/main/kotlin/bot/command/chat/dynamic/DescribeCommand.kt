@@ -1,5 +1,6 @@
-package bot.command
+package bot.command.chat.dynamic
 
+import bot.command.Command
 import bot.core.service.imagedescriptor.ImageDescriptorService
 import bot.utilities.isValidURL
 import dev.kord.core.behavior.channel.withTyping

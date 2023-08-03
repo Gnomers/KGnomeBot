@@ -6,6 +6,7 @@ import bot.constants.UNKNOWN_COMMAND
 import bot.core.exception.DuplicateClassExcpetion
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.kordLogger
+import org.reflections.Reflections
 
 object CommandHandler {
     // name -> command class
@@ -13,8 +14,9 @@ object CommandHandler {
 
     fun registerCommands() {
         kordLogger.info("Starting CommandHandler")
-        Command::class.sealedSubclasses.forEach { clazz ->
-            val instance = clazz.constructors.first { it.parameters.isEmpty() }.call()
+        val subClasses = Reflections("bot.command").getSubTypesOf(Command::class.java)
+        subClasses.forEach { clazz ->
+            val instance = clazz.constructors.first { it.parameters.isEmpty() }.newInstance() as Command
 
             registeredCommands.getOrDefault(instance.name, null)?.let {
                 // command already exists
@@ -41,7 +43,8 @@ object CommandHandler {
                     event.message.content.split("${it.name} ", limit = 2)[1]
                 }.getOrNull()
 
-                if (it.hasSubCommand && subCommand != null) {
+
+                if (!it.hasSubCommand || subCommand != null) {
                     it.invoke(event, subCommand)
                 } else {
                     event.message.channel.createMessage(NO_SUBCOMMAND)

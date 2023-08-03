@@ -2,7 +2,7 @@ package bot.command
 
 import dev.kord.core.event.message.MessageCreateEvent
 
-sealed class Command(
+abstract class Command(
     val name: String,
     val description: String,
     val hasSubCommand: Boolean = false

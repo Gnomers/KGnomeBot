@@ -27,6 +27,8 @@ dependencies {
     // HTTP
     implementation("com.squareup.okhttp:okhttp:2.7.5")
 
+    // Command registering
+    implementation("org.reflections:reflections:0.10.2")
 }
 
 java {

@@ -1,5 +1,6 @@
-package bot.command
+package bot.command.sound.external
 
+import bot.command.Command
 import bot.core.service.MainSongService
 import dev.kord.core.event.message.MessageCreateEvent
 

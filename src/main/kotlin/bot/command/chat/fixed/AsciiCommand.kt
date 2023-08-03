@@ -1,5 +1,6 @@
-package bot.command
+package bot.command.chat.fixed
 
+import bot.command.Command
 import bot.constants.GNOME_ASCII
 import bot.constants.MONKI_ASCII
 import dev.kord.core.event.message.MessageCreateEvent

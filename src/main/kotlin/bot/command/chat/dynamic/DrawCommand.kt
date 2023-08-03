@@ -1,5 +1,6 @@
-package bot.command
+package bot.command.chat.dynamic
 
+import bot.command.Command
 import bot.core.exception.TryAgainLaterException
 import bot.core.service.imagedraw.ImageDrawingService
 import dev.kord.core.behavior.channel.createMessage
