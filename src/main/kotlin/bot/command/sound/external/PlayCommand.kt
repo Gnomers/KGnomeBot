@@ -4,8 +4,8 @@ import bot.command.Command
 import bot.core.voice.SoundPlayerManager
 import dev.kord.core.event.message.MessageCreateEvent
 
-class YoutubeCommand: Command(
-    name = "youtube",
+class PlayCommand: Command(
+    name = "play",
     description = "Let Gnome practice his DJ skills!",
     hasSubCommand = true
 ) {
