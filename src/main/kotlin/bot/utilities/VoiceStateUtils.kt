@@ -19,3 +19,6 @@ fun changedStreaming(oldState: VoiceState?, newState: VoiceState) =
     oldState?.let {
         oldState.isSelfStreaming != newState.isSelfStreaming
     } ?: false // if oldState is null, they couldn't change an in-voice state
+
+suspend fun isDisconnect(oldState: VoiceState?, newState: VoiceState) =
+    oldState?.getChannelOrNull() != null && newState.getChannelOrNull() == null
