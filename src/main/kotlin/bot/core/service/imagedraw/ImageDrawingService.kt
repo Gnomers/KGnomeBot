@@ -23,6 +23,7 @@ object ImageDrawingService {
         "Realistic_Vision_V1.4" to "https://api-inference.huggingface.co/models/SG161222/Realistic_Vision_V1.4",
         "StableDiffusion_v1.5" to "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
         "openjourney" to "https://api-inference.huggingface.co/models/prompthero/openjourney",
+        "Animagine_XL" to "https://api-inference.huggingface.co/models/Linaqruf/animagine-xl",
     )
 
     //SG161222/Realistic_Vision_V1.4
