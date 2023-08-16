@@ -1,6 +1,7 @@
-package bot.trigger
+package bot.trigger.voice
 
 import bot.core.voice.SoundPlayerManager
+import bot.trigger.Trigger
 import bot.utilities.Sound
 import bot.utilities.isDisconnect
 import bot.utilities.onIgnoringBots
@@ -8,7 +9,7 @@ import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlinx.coroutines.delay
 
-object FaliceuVoiceTrigger: Trigger(
+class FaliceuVoiceTrigger: Trigger(
     name = "channel_left",
     description = "Sends out a \"faliceu\" when someone leaves the voice chat"
 ) {

@@ -1,12 +1,13 @@
-package bot.trigger
+package bot.trigger.chat
 
 import bot.constants.GNOME_ASCII
+import bot.trigger.Trigger
 import bot.utilities.isCommand
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-object GnomeRegexTrigger: Trigger(
+class GnomeRegexTrigger: Trigger(
     name = "gnome_regex",
     description = "Sends a gnome ascii when theres a `g*n*o*m*e` message"
 ) {

@@ -1,15 +1,15 @@
-package bot.command.sound.simple
+package bot.command.voice.simple
 
 import bot.command.Command
 import bot.core.voice.SoundPlayerManager
 import bot.utilities.Sound
 import dev.kord.core.event.message.MessageCreateEvent
 
-class RandomSoundCommand: Command(
-    name = "random",
-    description = "Plays a random sound"
+class BandidoCommand: Command(
+    name = "bandido",
+    description = "nhiahiahia"
 ) {
     override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
-        SoundPlayerManager.playSoundForMessage(event, Sound.values().random())
+        SoundPlayerManager.playSoundForMessage(event = event, sound = Sound.BANDIDO)
     }
 }

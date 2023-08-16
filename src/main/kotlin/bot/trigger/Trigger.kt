@@ -2,7 +2,7 @@ package bot.trigger
 
 import dev.kord.core.Kord
 
-sealed class Trigger(
+abstract class Trigger(
     val name: String,
     val description: String
 ) {

@@ -3,6 +3,7 @@ package bot.core
 import bot.getKordInstance
 import bot.trigger.Trigger
 import dev.kord.core.kordLogger
+import org.reflections.Reflections
 
 object TriggerRegistrator {
 
@@ -10,12 +11,12 @@ object TriggerRegistrator {
         kordLogger.info("Starting TriggerRegistrator")
         val registeredTriggers = mutableListOf<Trigger>()
 
-        Trigger::class.sealedSubclasses.forEach { clazz ->
-            kordLogger.info("Registering trigger for class=${clazz::simpleName}")
-            clazz.objectInstance?.register(getKordInstance())
-            clazz.objectInstance?.let {
-                registeredTriggers.add(it)
-            }
+        val subClasses = Reflections("bot.trigger").getSubTypesOf(Trigger::class.java)
+        subClasses.forEach { clazz ->
+            kordLogger.info("Registering trigger for class=${clazz.simpleName}")
+            val instance = clazz.constructors.first { it.parameters.isEmpty() }.newInstance() as Trigger
+            instance.register(getKordInstance())
+            registeredTriggers.add(instance)
         }
 
         kordLogger.info("TriggerRegistrator finished with triggers=${registeredTriggers.map { it.name }}")

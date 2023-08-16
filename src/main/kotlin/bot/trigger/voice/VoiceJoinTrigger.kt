@@ -1,17 +1,18 @@
-package bot.trigger
+package bot.trigger.voice
 
 import bot.core.voice.SoundPlayerManager
+import bot.trigger.Trigger
 import bot.utilities.*
 import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlin.random.Random
 
-object VoiceJoinTrigger: Trigger(
+class VoiceJoinTrigger: Trigger(
     name = "channel_joined",
     description = "Sends out a random sound when someone joins the chat"
 ) {
     private val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS, Sound.AMOGUS, Sound.BANDIDO, Sound.FALICEU)
-    private const val RANDOM_VOICE_JOIN_CHANCE = 0.2 // 20%
+    private val RANDOM_VOICE_JOIN_CHANCE = 0.2 // 20%
 
 
     override suspend fun register(kordInstance: Kord) {

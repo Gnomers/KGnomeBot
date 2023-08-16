@@ -1,12 +1,13 @@
-package bot.trigger
+package bot.trigger.chat
 
 import bot.constants.MONKI_ASCII
+import bot.trigger.Trigger
 import bot.utilities.isCommand
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-object MonkiRegexTrigger: Trigger(
+class MonkiRegexTrigger: Trigger(
     name = "monki_regex",
     description = "Sends a monki ascii when theres a message that reminds of our ape friend"
 ) {

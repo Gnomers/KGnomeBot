@@ -1,4 +1,4 @@
-package bot.command.sound
+package bot.command.voice
 
 import bot.command.Command
 import bot.core.voice.SoundPlayerManager

@@ -13,7 +13,6 @@ object CommandHandler {
     val registeredCommands: MutableMap<String, Command> = mutableMapOf()
 
     fun registerCommands() {
-        kordLogger.info("Starting CommandHandler")
         val subClasses = Reflections("bot.command").getSubTypesOf(Command::class.java)
         subClasses.forEach { clazz ->
             val instance = clazz.constructors.first { it.parameters.isEmpty() }.newInstance() as Command

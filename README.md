@@ -4,6 +4,35 @@
 
 I'm gnot a gnelf, I'm a Discord bot, written in Kotlin with Kord!
 
+## Running the bot
+To run this bot, you'll first need to set some environment variables for the project, like the Discord Auth Token.
+You can see which environment variables we are using if you look into the Dockerfile, like this:
+```
+RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
+RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env
+RUN echo ANOTHER_ENV_VAR=${ANOTHER_ENV_VAR} >> .env
+```
+
+Create a file named ".env" inside the root folder: `(...)/kgnome/.env`.
+
+This .env file is a will be used to set the environment variables the bot will use.
+For now, as we only have 2 environment variables, so the .env would look like this:
+```
+DISCORD_AUTH_TOKEN = MY_DISCORD_AUTH_TOKEN
+HUGGING_FACE_AUTH_TOKEN = MY_HUGGING_FACE_AUTH_TOKEN
+```
+
+The HuggingFace auth token is optional, as it is only used for some commands that use AIs, like the "draw" and "describe" commands, for example.
+However, if you do not set the Discord Auth Token, the bot will not run.
+
+After setting all the environment variables, just run the `main` method inside KGnomeRunner.kt.
+
+Alternatively, you can build and run the kgnome.jar file:
+```
+./gradlew clean build
+java -jar build/libs/kgnome.jar
+```
+
 ## How do I create a new command?
 Head into the package `bot.command` and create a new "SomethingCommand" that extends "Command", give it a name (which will be used to invoke from the text chat) and a description (which will be shown on !gnome help).  
 **Note: The prefix `!gnome` can be changed on `bot.constants.Configuration`**    

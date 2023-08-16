@@ -1,12 +1,13 @@
-package bot.trigger
+package bot.trigger.chat
 
 import bot.constants.GOD_ASCII
+import bot.trigger.Trigger
 import bot.utilities.isCommand
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-object GodGauRegexTrigger: Trigger(
+class GodGauRegexTrigger: Trigger(
     name = "god_regex",
     description = "Sends a god, god gau ascii when theres a message containing god"
 ) {
