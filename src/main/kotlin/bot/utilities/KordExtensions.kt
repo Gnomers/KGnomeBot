@@ -9,17 +9,12 @@ import dev.kord.core.kordLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
 // Disgusting extension, needs refac
-public inline fun <reified T : Event> Kord.onIgnoringBots(
+inline fun <reified T : Event> Kord.onIgnoringBots(
     scope: CoroutineScope = this,
     noinline consumer: suspend T.() -> Unit
 ): Job =

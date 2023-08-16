@@ -10,12 +10,12 @@ import java.time.LocalDate
 import kotlin.random.Random
 
 
-class SongOfTheDayJob: Job(
-    name = "song_of_the_day",
+class RandomSongJob: Job(
+    name = "random_song",
     description = "Plays a random song from a list",
     executionDelaySeconds = 3600
 ) {
-    val RANDOM_SOUND_CHANCE = 0.05
+    val RANDOM_SOUND_CHANCE = 0.08 // 8%
     override suspend fun execute() {
 
         val songOfTheDay = IMPORTANT_SONGS.random(Random(LocalDate.now().dayOfYear))
