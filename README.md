@@ -11,6 +11,7 @@ You can see which environment variables we are using if you look into the Docker
 RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
 RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env
 RUN echo ANOTHER_ENV_VAR=${ANOTHER_ENV_VAR} >> .env
+RUN echo CUSTOM_ENTRY_CONFIG=${ANOTHER_ENV_VAR} >> .env
 ```
 
 Create a file named ".env" inside the root folder: `(...)/kgnome/.env`.
@@ -31,6 +32,24 @@ Alternatively, you can build and run the kgnome.jar file:
 ```
 ./gradlew clean build
 java -jar build/libs/kgnome.jar
+```
+
+## What is this Custom Entry Config?
+Custom Entry is a feature that plays a sound when a certain user connects to the voice chat.
+The environment variable CUSTOM_ENTRY_CONFIG expects a JSON as follows:
+```json
+{
+  "data": [
+    {
+      "user_id": "snowflake_id",
+      "sound": "SOUND_ENUM_NAME"
+    },
+    {
+      "user_id": "snowflake_id_2",
+      "sound": "SOUND_ENUM_NAME"
+    }
+  ]
+}
 ```
 
 ## How do I create a new command?

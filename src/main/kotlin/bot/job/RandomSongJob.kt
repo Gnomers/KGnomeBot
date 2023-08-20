@@ -29,7 +29,6 @@ class RandomSongJob: Job(
                 .collect {
                     SoundPlayerManager.playYoutubeVideoOnChannel(voiceChannel = it, video = songOfTheDay)
                 }
-
         }
     }
 }

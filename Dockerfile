@@ -15,5 +15,6 @@ ARG HUGGING_FACE_AUTH_TOKEN
 RUN touch .env
 RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
 RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env
+RUN echo CUSTOM_ENTRY_CONFIG=${ANOTHER_ENV_VAR} >> .env
 
 ENTRYPOINT ["java","-jar","-Duser.country=BR", "-Duser.language=pt","/app/kgnome.jar"]
