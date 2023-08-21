@@ -15,7 +15,7 @@ class RandomSoundJob: Job(
     executionDelaySeconds = 600
 ) {
     val RANDOM_SOUND_CHANCE = 0.15
-    val SOUNDS = listOf(Sound.WOO, Sound.CS, Sound.HM_MONKI, Sound.BIG_OL_FART, Sound.AMOGUS)
+    val SOUNDS = listOf(Sound.WOO, Sound.CS, Sound.HM_MONKI, Sound.BIG_OL_FART, Sound.AMOGUS, Sound.PALMEIRAS)
     override suspend fun execute() {
         // Random.nextDouble() returns a double from 0 (inclusive) to 1 (exclusive)
         if(Random.nextDouble() < RANDOM_SOUND_CHANCE) {
