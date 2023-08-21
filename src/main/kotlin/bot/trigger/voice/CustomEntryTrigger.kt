@@ -1,7 +1,6 @@
-package bot.trigger.voice.palhacos
+package bot.trigger.voice
 
 import bot.constants.CUSTOM_ENTRY_ENV_VAR
-import bot.core.CustomEntryConfiguration
 import bot.core.voice.SoundPlayerManager
 import bot.trigger.Trigger
 import bot.utilities.*
@@ -26,7 +25,7 @@ class CustomEntryTrigger : Trigger(
         }
     }.getOrNull()
     override suspend fun register(kordInstance: Kord) {
-        if (config == null) {
+        if (config?.data == null) {
             kordLogger.warn("Ignoring CustomEntryTrigger registration because $CUSTOM_ENTRY_ENV_VAR is empty or invalid")
             return
         }
@@ -42,20 +41,20 @@ class CustomEntryTrigger : Trigger(
                 return@onIgnoringBots
             }
 
-//            val sound = member.id
-             val match = config?.data?.firstOrNull {
+            val matchedData = config.data.firstOrNull {
                 it.userId == member.id.toString()
-             } ?: return@onIgnoringBots
+            }
 
             runCatching {
-                return@runCatching match.sound.let {
-                    Sound.valueOf(it)
-                }
-            }.getOrNull()?.let { sound ->
-                kordLogger.error("CustomEntry sound=${match.sound} is invalid.")
-                member.getVoiceState().getChannelOrNull()?.let { channel ->
-                    SoundPlayerManager.playSoundOnChannel(channel, sound)
-                }
+                // find a rule that matches with the user that just joined
+                matchedData?.let {
+                    // parse the sound
+                    val sound = Sound.valueOf(it.sound)
+                    member.getVoiceState().getChannelOrNull()?.let { channel ->
+                        SoundPlayerManager.playSoundOnChannel(channel, sound)
+                    }
+                    // if the sound is invalid, log error and life goes on
+                } ?: kordLogger.error("CustomEntry sound=${matchedData?.sound} is invalid.")
             }
         }
     }

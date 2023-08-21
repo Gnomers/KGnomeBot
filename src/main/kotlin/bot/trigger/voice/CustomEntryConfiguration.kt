@@ -1,4 +1,4 @@
-package bot.core
+package bot.trigger.voice
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
