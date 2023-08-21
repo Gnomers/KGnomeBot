@@ -18,7 +18,7 @@ enum class Sound(val path: String) {
     BANDIDO("audio/risadinha_de_bandido.mp3"),
     BALBOA("audio/balboa.mp3"),
     FALICEU("audio/faliceu.mp3"),
-    PALMEIRAS("audio/palmeiras.mp3"),
+    RAP_DO_VEGETA("audio/rap_do_vegeta.mp3"),
     AMOGUS("audio/amogus.mp3");
 
     fun getTrack(): AudioTrack {
