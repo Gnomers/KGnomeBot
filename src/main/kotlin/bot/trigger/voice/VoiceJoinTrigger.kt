@@ -11,9 +11,7 @@ class VoiceJoinTrigger: Trigger(
     name = "channel_joined",
     description = "Sends out a random sound when someone joins the chat"
 ) {
-    private val randomSoundList = listOf(Sound.WOO, Sound.HM_MONKI, Sound.CS, Sound.AMOGUS, Sound.BANDIDO, Sound.FALICEU, Sound.PALMEIRAS)
     private val TRIGGER_CHANCE = 0.2 // 20%
-
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
@@ -28,7 +26,7 @@ class VoiceJoinTrigger: Trigger(
                 return@onIgnoringBots
             }
             if(Random.nextDouble() < TRIGGER_CHANCE) {
-                val sound = randomSoundList.random()
+                val sound = Sound.COMMON_SOUND_LIST.random()
                 member.getVoiceState().getChannelOrNull()?.let {
                     SoundPlayerManager.playSoundOnChannel(it, sound)
                 }

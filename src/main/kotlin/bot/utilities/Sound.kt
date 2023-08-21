@@ -20,6 +20,7 @@ enum class Sound(val path: String) {
     FALICEU("audio/faliceu.mp3"),
     RAP_DO_VEGETA("audio/rap_do_vegeta.mp3"),
     PALMEIRAS("audio/palmeiras.mp3"),
+    RONALDINHO_SOCCER("audio/ronaldinho_soccer.mp3"),
     AMOGUS("audio/amogus.mp3");
 
     fun getTrack(): AudioTrack {
@@ -41,5 +42,18 @@ enum class Sound(val path: String) {
 
             else -> throw UnknownFileFormatExcpetion("File format \"${this.path}\" unrecognized")
         }
+    }
+
+    companion object {
+        val COMMON_SOUND_LIST = listOf(
+            WOO,
+            CS,
+            HM_MONKI,
+            BIG_OL_FART,
+            AMOGUS,
+            PALMEIRAS,
+            FALICEU,
+            RONALDINHO_SOCCER
+        )
     }
 }
