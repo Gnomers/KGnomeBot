@@ -51,7 +51,7 @@ The environment variable CUSTOM_ENTRY_CONFIG_BASE64 expects a JSON converted to 
   ]
 }
 ```
-This JSON would be added in the envvar as: ewogICJkYXRhIjogWwogICAgewogICAgICAidXNlcl9pZCI6ICJzbm93Zmxha2VfaWQiLAogICAgICAic291bmQiOiAiU09VTkRfRU5VTV9OQU1FIgogICAgfSwKICAgIHsKICAgICAgInVzZXJfaWQiOiAic25vd2ZsYWtlX2lkXzIiLAogICAgICAic291bmQiOiAiU09VTkRfRU5VTV9OQU1FIgogICAgfQogIF0KfQ==
+This JSON sould be converted to Base64 to be used in the environment variable, like this: ewogICJkYXRhIjogWwogICAgewogICAgICAidXNlcl9pZCI6ICJzbm93Zmxha2VfaWQiLAogICAgICAic291bmQiOiAiU09VTkRfRU5VTV9OQU1FIgogICAgfSwKICAgIHsKICAgICAgInVzZXJfaWQiOiAic25vd2ZsYWtlX2lkXzIiLAogICAgICAic291bmQiOiAiU09VTkRfRU5VTV9OQU1FIgogICAgfQogIF0KfQ==
 
 ## How do I create a new command?
 Head into the package `bot.command` and create a new "SomethingCommand" that extends "Command", give it a name (which will be used to invoke from the text chat) and a description (which will be shown on !gnome help).  
