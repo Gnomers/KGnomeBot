@@ -10,21 +10,21 @@ You can see which environment variables we are using if you look into the Docker
 ```
 RUN echo DISCORD_AUTH_TOKEN=${DISCORD_AUTH_TOKEN} >> .env
 RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env
+RUN echo CUSTOM_ENTRY_CONFIG_BASE64=${CUSTOM_ENTRY_CONFIG_BASE64} >> .env
 RUN echo ANOTHER_ENV_VAR=${ANOTHER_ENV_VAR} >> .env
-RUN echo CUSTOM_ENTRY_CONFIG=${ANOTHER_ENV_VAR} >> .env
 ```
 
 Create a file named ".env" inside the root folder: `(...)/kgnome/.env`.
 
 This .env file is a will be used to set the environment variables the bot will use.
-For now, as we only have 2 environment variables, so the .env would look like this:
+For example:
 ```
 DISCORD_AUTH_TOKEN = MY_DISCORD_AUTH_TOKEN
 HUGGING_FACE_AUTH_TOKEN = MY_HUGGING_FACE_AUTH_TOKEN
+ANOTHER_ENV_VAR = ANOTHER_ENV_VAR_VALUE
 ```
 
-The HuggingFace auth token is optional, as it is only used for some commands that use AIs, like the "draw" and "describe" commands, for example.
-However, if you do not set the Discord Auth Token, the bot will not run.
+Every variable other than `DISCORD_AUTH_TOKEN` is optional.
 
 After setting all the environment variables, just run the `main` method inside KGnomeRunner.kt.
 
@@ -36,7 +36,7 @@ java -jar build/libs/kgnome.jar
 
 ## What is this Custom Entry Config?
 Custom Entry is a feature that plays a sound when a certain user connects to the voice chat.
-The environment variable CUSTOM_ENTRY_CONFIG expects a JSON as follows:
+The environment variable CUSTOM_ENTRY_CONFIG_BASE64 expects a JSON converted to Base64 as follows:
 ```json
 {
   "data": [
@@ -51,6 +51,7 @@ The environment variable CUSTOM_ENTRY_CONFIG expects a JSON as follows:
   ]
 }
 ```
+This JSON would be added in the envvar as: ewogICJkYXRhIjogWwogICAgewogICAgICAidXNlcl9pZCI6ICJzbm93Zmxha2VfaWQiLAogICAgICAic291bmQiOiAiU09VTkRfRU5VTV9OQU1FIgogICAgfSwKICAgIHsKICAgICAgInVzZXJfaWQiOiAic25vd2ZsYWtlX2lkXzIiLAogICAgICAic291bmQiOiAiU09VTkRfRU5VTV9OQU1FIgogICAgfQogIF0KfQ==
 
 ## How do I create a new command?
 Head into the package `bot.command` and create a new "SomethingCommand" that extends "Command", give it a name (which will be used to invoke from the text chat) and a description (which will be shown on !gnome help).  

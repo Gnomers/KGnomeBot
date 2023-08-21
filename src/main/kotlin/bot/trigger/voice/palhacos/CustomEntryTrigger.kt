@@ -11,6 +11,7 @@ import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.kordLogger
 import io.github.cdimascio.dotenv.dotenv
+import net.iharder.Base64
 
 class CustomEntryTrigger : Trigger(
     name = "custom_entry",
@@ -19,7 +20,7 @@ class CustomEntryTrigger : Trigger(
     val om = ObjectMapper().registerKotlinModule()
 
     val config = dotenv()[CUSTOM_ENTRY_ENV_VAR]?.let {
-        om.readValue(it, CustomEntryConfiguration::class.java)
+        om.readValue(Base64.decode(it), CustomEntryConfiguration::class.java)
     }
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
