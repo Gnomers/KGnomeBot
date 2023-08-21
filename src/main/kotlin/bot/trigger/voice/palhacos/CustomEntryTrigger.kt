@@ -19,10 +19,17 @@ class CustomEntryTrigger : Trigger(
 ) {
     val om = ObjectMapper().registerKotlinModule()
 
-    val config = dotenv()[CUSTOM_ENTRY_ENV_VAR]?.let {
-        om.readValue(Base64.decode(it), CustomEntryConfiguration::class.java)
-    }
+    val config = runCatching {
+        dotenv()[CUSTOM_ENTRY_ENV_VAR]?.let {
+            kordLogger.info("Parsing $CUSTOM_ENTRY_ENV_VAR=$it")
+            om.readValue(Base64.decode(it), CustomEntryConfiguration::class.java)
+        }
+    }.getOrNull()
     override suspend fun register(kordInstance: Kord) {
+        if (config == null) {
+            kordLogger.warn("Ignoring CustomEntryTrigger registration because $CUSTOM_ENTRY_ENV_VAR is empty or invalid")
+            return
+        }
         kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
             val member = state.getMember()
             if(state.channelId == null ||
@@ -38,14 +45,14 @@ class CustomEntryTrigger : Trigger(
 //            val sound = member.id
              val match = config?.data?.firstOrNull {
                 it.userId == member.id.toString()
-             }
+             } ?: return@onIgnoringBots
 
             runCatching {
-                return@runCatching match?.sound?.let {
+                return@runCatching match.sound.let {
                     Sound.valueOf(it)
                 }
             }.getOrNull()?.let { sound ->
-                kordLogger.error("CustomEntry sound=${match?.sound} is invalid.")
+                kordLogger.error("CustomEntry sound=${match.sound} is invalid.")
                 member.getVoiceState().getChannelOrNull()?.let { channel ->
                     SoundPlayerManager.playSoundOnChannel(channel, sound)
                 }
