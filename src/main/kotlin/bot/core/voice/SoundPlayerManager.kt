@@ -36,9 +36,9 @@ object SoundPlayerManager {
 
     // Idk if this way of managing VoiceConnection may lead to some leaks, lets hope not
     suspend fun playSoundOnChannel(voiceChannel: BaseVoiceChannelBehavior, sound: Sound) {
-        val guildId = registerGuildConnection(voiceChannel)
-
         val player = createPlayerManager().createCustomPlayer()
+
+        val guildId = prepareGuildConnection(voiceChannel, player)
 
         player.playTrack(sound.getTrack())
 
@@ -46,10 +46,11 @@ object SoundPlayerManager {
     }
 
     suspend fun playYoutubeVideoOnChannel(chatChannel: MessageChannelBehavior? = null, voiceChannel: BaseVoiceChannelBehavior, video: String) {
-        val guildId = registerGuildConnection(voiceChannel)
 
         val playerManager = createPlayerManager()
         val player = createPlayerManager().createCustomPlayer()
+
+        val guildId = prepareGuildConnection(voiceChannel, player)
 
         val searchString = if (video.isValidURL()) video else "ytsearch:$video"
         playerManager.loadItem(searchString, createYoutubeResultHandler(player, chatChannel))
@@ -114,8 +115,12 @@ object SoundPlayerManager {
             .apply {
                 this.addListener {
                     when (it) {
-                        is TrackEndEvent, is TrackExceptionEvent, is TrackStuckEvent -> runBlocking {
-                            kordLogger.error("An error occurred while playing an Audio. error=$it")
+                        is TrackEndEvent -> runBlocking {
+                            kordLogger.info("Track ended, stopping player. track=${it.track.info.title}")
+                            stop(players[it.player]!!.data.guildId)
+                        }
+                        is TrackExceptionEvent, is TrackStuckEvent -> runBlocking {
+                            kordLogger.error("An unexpected event occurred while playing an Audio. event=$it")
                             stop(players[it.player]!!.data.guildId)
                         }
                     }
@@ -131,6 +136,7 @@ object SoundPlayerManager {
 
         override fun trackLoaded(track: AudioTrack?) {
             runBlocking {
+                kordLogger.info("Now playing: ${track?.info?.title}")
                 channel?.createMessage("Now playing: ${track?.info?.title}")
             }
             player.playTrack(track)
@@ -140,6 +146,7 @@ object SoundPlayerManager {
             val firstTrack = playlist?.tracks?.firstOrNull()
             firstTrack?.let {
                 runBlocking {
+                    kordLogger.info("Now playing: ${it.info?.title}")
                     channel?.createMessage("Now playing: ${it.info?.title}")
                 }
                 player.playTrack(it)
@@ -148,9 +155,9 @@ object SoundPlayerManager {
 
         override fun noMatches() {
             runBlocking {
+                kordLogger.warn("Couldn't find the video")
                 channel?.createMessage("Oh no, even with my magic powers I could not find that video :(")
             }
-            kordLogger.warn("Couldn't find the video")
         }
 
         override fun loadFailed(exception: FriendlyException?) {
@@ -164,10 +171,13 @@ object SoundPlayerManager {
         }
     }
 
-    private suspend fun registerGuildConnection(voiceChannel: BaseVoiceChannelBehavior): Snowflake {
+    private suspend fun prepareGuildConnection(voiceChannel: BaseVoiceChannelBehavior, player: AudioPlayer): Snowflake {
         val guildId = voiceChannel.guildId
         if (connections.contains(guildId)) {
             connections.remove(guildId)!!.shutdown()
+        }
+        if(players.contains(player)) {
+            players.remove(player)!!.shutdown()
         }
         return guildId
     }

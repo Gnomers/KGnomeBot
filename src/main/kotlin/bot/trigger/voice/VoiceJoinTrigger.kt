@@ -7,6 +7,7 @@ import bot.utilities.isCommonVoiceChatAction
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
+import dev.kord.core.kordLogger
 import kotlin.random.Random
 
 class VoiceJoinTrigger: Trigger(
@@ -26,6 +27,7 @@ class VoiceJoinTrigger: Trigger(
                 return@onIgnoringBots
             }
             if(Random.nextDouble() < TRIGGER_CHANCE) {
+                kordLogger.info("Triggered ${this::class.simpleName} chance")
                 val sound = Sound.COMMON_SOUND_LIST.random()
                 member.getVoiceState().getChannelOrNull()?.let {
                     SoundPlayerManager.playSoundOnChannel(it, sound)

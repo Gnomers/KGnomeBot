@@ -26,6 +26,7 @@ class CustomEntryTrigger : Trigger(
             om.readValue(Base64.decode(it), CustomEntryConfiguration::class.java)
         }
     }.getOrNull()
+
     override suspend fun register(kordInstance: Kord) {
         if (config?.data == null) {
             kordLogger.warn("Ignoring CustomEntryTrigger registration because $CUSTOM_ENTRY_ENV_VAR is empty or invalid")
@@ -43,7 +44,7 @@ class CustomEntryTrigger : Trigger(
 
             val matchedData = config.data.firstOrNull {
                 it.userId == member.id.toString()
-            }
+            }?.also { kordLogger.info("User has a CustomEntryConfig match. sound=${it.sound}") }
 
             runCatching {
                 // find a rule that matches with the user that just joined
