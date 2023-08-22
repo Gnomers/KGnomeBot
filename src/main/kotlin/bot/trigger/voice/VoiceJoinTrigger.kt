@@ -2,7 +2,9 @@ package bot.trigger.voice
 
 import bot.core.voice.SoundPlayerManager
 import bot.trigger.Trigger
-import bot.utilities.*
+import bot.utilities.Sound
+import bot.utilities.isCommonVoiceChatAction
+import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlin.random.Random
@@ -19,9 +21,7 @@ class VoiceJoinTrigger: Trigger(
             if(state.channelId == null ||
                 member.isBot ||
                 // we will ignore any mute/deaf/live/in-voice changes
-                changedDeaf(oldState = this.old, newState = this.state) ||
-                changedMute(oldState = this.old, newState = this.state) ||
-                changedStreaming(oldState = this.old, newState = this.state)
+                isCommonVoiceChatAction(this.old, this.state)
             ) {
                 return@onIgnoringBots
             }

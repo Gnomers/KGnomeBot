@@ -3,7 +3,9 @@ package bot.trigger.voice
 import bot.constants.CUSTOM_ENTRY_ENV_VAR
 import bot.core.voice.SoundPlayerManager
 import bot.trigger.Trigger
-import bot.utilities.*
+import bot.utilities.Sound
+import bot.utilities.isCommonVoiceChatAction
+import bot.utilities.onIgnoringBots
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import dev.kord.core.Kord
@@ -34,9 +36,7 @@ class CustomEntryTrigger : Trigger(
             if(state.channelId == null ||
                 member.isBot ||
                 // we will ignore any mute/deaf/live/in-voice changes
-                changedDeaf(oldState = this.old, newState = this.state) ||
-                changedMute(oldState = this.old, newState = this.state) ||
-                changedStreaming(oldState = this.old, newState = this.state)
+                isCommonVoiceChatAction(this.old, this.state)
             ) {
                 return@onIgnoringBots
             }
