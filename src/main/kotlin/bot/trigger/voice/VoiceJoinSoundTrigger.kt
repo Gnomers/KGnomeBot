@@ -13,8 +13,9 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.kordLogger
 import io.github.cdimascio.dotenv.dotenv
 import net.iharder.Base64
+import kotlin.random.Random
 
-class CustomEntryTrigger : Trigger(
+class VoiceJoinSoundTrigger : Trigger(
     name = "custom_entry",
     description = "Plays a configured sound when an user joins the voice chat"
 ) {
@@ -26,6 +27,8 @@ class CustomEntryTrigger : Trigger(
             om.readValue(Base64.decode(it), CustomEntryConfiguration::class.java)
         }
     }.getOrNull()
+
+    val TRIGGER_CHANCE = 0.2 // 20%
 
     override suspend fun register(kordInstance: Kord) {
         if (config?.data == null) {
@@ -42,21 +45,34 @@ class CustomEntryTrigger : Trigger(
                 return@onIgnoringBots
             }
 
-            val matchedData = config.data.firstOrNull {
-                it.userId == member.id.toString()
-            }?.also { kordLogger.info("User has a CustomEntryConfig match. sound=${it.sound}") }
-
             runCatching {
-                // find a rule that matches with the user that just joined
-                matchedData?.let {
+                // Has a config match
+                config.data.firstOrNull {
+                    it.userId == member.id.toString()
+                }?.let {
+                    kordLogger.info("User id=${member.id} has a CustomEntryConfig match. sound=${it.sound}")
                     // parse the sound
                     val sound = Sound.valueOf(it.sound)
                     member.getVoiceState().getChannelOrNull()?.let { channel ->
                         SoundPlayerManager.playSoundOnChannel(channel, sound)
                     }
-                    // if the sound is invalid, log error and life goes on
-                } ?: kordLogger.error("CustomEntry sound=${matchedData?.sound} is invalid.")
+                    return@onIgnoringBots
+                }
+
+                // Has no config match
+                kordLogger.info("User id=${member.id} has no CustomEntryConfig, checking random sound chance")
+                if(Random.nextDouble() < TRIGGER_CHANCE) {
+                    kordLogger.info("Triggered ${this::class.simpleName} chance")
+                    val sound = Sound.COMMON_SOUND_LIST.random()
+                    member.getVoiceState().getChannelOrNull()?.let {
+                        SoundPlayerManager.playSoundOnChannel(it, sound)
+                    }
+                }
+                return@onIgnoringBots
+            }.onFailure {
+                kordLogger.error("An error occured on ${this::class.simpleName}, error=${it}", it)
             }
+
         }
     }
 
