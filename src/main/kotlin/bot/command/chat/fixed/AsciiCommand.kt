@@ -5,7 +5,7 @@ import bot.constants.GNOME_ASCII
 import bot.constants.MONKI_ASCII
 import dev.kord.core.event.message.MessageCreateEvent
 
-class AsciiCommand: Command(
+object AsciiCommand: Command(
     name = "ascii",
     description = "Sends out a random ascii"
 ) {

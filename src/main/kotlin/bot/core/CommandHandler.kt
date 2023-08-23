@@ -15,7 +15,7 @@ object CommandHandler {
     fun registerCommands() {
         val subClasses = Reflections("bot.command").getSubTypesOf(Command::class.java)
         subClasses.forEach { clazz ->
-            val instance = clazz.constructors.first { it.parameters.isEmpty() }.newInstance() as Command
+            val instance = clazz.kotlin.objectInstance!!
 
             registeredCommands.getOrDefault(instance.name, null)?.let {
                 // command already exists

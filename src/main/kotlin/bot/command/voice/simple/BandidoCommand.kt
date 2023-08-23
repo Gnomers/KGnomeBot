@@ -5,7 +5,7 @@ import bot.core.voice.SoundPlayerManager
 import bot.utilities.Sound
 import dev.kord.core.event.message.MessageCreateEvent
 
-class BandidoCommand: Command(
+object BandidoCommand: Command(
     name = "bandido",
     description = "nhiahiahia"
 ) {

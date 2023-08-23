@@ -1,13 +1,9 @@
 package bot.job
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.*
 
 
-sealed class Job(
+abstract class Job(
     val name: String,
     val description: String,
     val executionDelaySeconds: Long // the job will execute every X seconds

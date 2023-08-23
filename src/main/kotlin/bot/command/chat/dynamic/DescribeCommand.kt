@@ -8,7 +8,7 @@ import dev.kord.core.event.message.MessageCreateEvent
 
 private const val INVALID_IMAGE = "Ho ho ho ha ha, you can't gnome me! Please provide an image or a valid image URL."
 
-class DescribeCommand: Command(
+object DescribeCommand: Command(
     name = "describe",
     description = "Describes an image",
     hasSubCommand = false

@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.map
 import kotlin.random.Random
 
 
-class RandomSoundJob: Job(
+object RandomSoundJob: Job(
     name = "random_sound_job",
     description = "Plays a random sound",
     executionDelaySeconds = 600
 ) {
-    val RANDOM_SOUND_CHANCE = 0.15
+    val RANDOM_SOUND_CHANCE = 1
     override suspend fun execute() {
         // Random.nextDouble() returns a double from 0 (inclusive) to 1 (exclusive)
         if(Random.nextDouble() < RANDOM_SOUND_CHANCE) {

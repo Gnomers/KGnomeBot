@@ -7,7 +7,7 @@ import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-class GodGauRegexTrigger: Trigger(
+object GodGauRegexTrigger: Trigger(
     name = "god_regex",
     description = "Sends a god, god gau ascii when theres a message containing god"
 ) {

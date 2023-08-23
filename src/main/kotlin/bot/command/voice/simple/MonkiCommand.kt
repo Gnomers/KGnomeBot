@@ -5,7 +5,7 @@ import bot.core.voice.SoundPlayerManager
 import bot.utilities.Sound
 import dev.kord.core.event.message.MessageCreateEvent
 
-class MonkiCommand: Command(
+object MonkiCommand: Command(
     name = "monki",
     description = "HMM, MONKI"
 ) {

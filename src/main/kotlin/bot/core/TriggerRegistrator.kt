@@ -8,13 +8,13 @@ import org.reflections.Reflections
 object TriggerRegistrator {
 
     suspend fun registerTriggers() {
-        kordLogger.info("Starting TriggerRegistrator")
         val registeredTriggers = mutableListOf<Trigger>()
+        kordLogger.info("Starting TriggerRegistrator")
 
         val subClasses = Reflections("bot.trigger").getSubTypesOf(Trigger::class.java)
         subClasses.forEach { clazz ->
             kordLogger.info("Registering trigger for class=${clazz.simpleName}")
-            val instance = clazz.constructors.first { it.parameters.isEmpty() }.newInstance() as Trigger
+            val instance = clazz.kotlin.objectInstance!!
             instance.register(getKordInstance())
             registeredTriggers.add(instance)
         }

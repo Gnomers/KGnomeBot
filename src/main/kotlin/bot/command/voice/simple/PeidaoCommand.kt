@@ -5,7 +5,7 @@ import bot.core.voice.SoundPlayerManager
 import bot.utilities.Sound
 import dev.kord.core.event.message.MessageCreateEvent
 
-class PeidaoCommand: Command(
+object PeidaoCommand: Command(
     name = "peidao",
     description = "DEU PRA OUVIR?"
 ) {

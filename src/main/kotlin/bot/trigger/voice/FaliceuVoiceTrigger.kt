@@ -11,7 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlin.random.Random
 
-class FaliceuVoiceTrigger : Trigger(
+object FaliceuVoiceTrigger : Trigger(
     name = "channel_left",
     description = "Sends out a \"faliceu\" when someone leaves the voice chat"
 ) {

@@ -7,7 +7,7 @@ import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-class GnomeRegexTrigger: Trigger(
+object GnomeRegexTrigger: Trigger(
     name = "gnome_regex",
     description = "Sends a gnome ascii when theres a `g*n*o*m*e` message"
 ) {

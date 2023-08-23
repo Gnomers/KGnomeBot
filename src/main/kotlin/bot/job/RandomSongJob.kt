@@ -10,7 +10,7 @@ import java.time.LocalDate
 import kotlin.random.Random
 
 
-class RandomSongJob: Job(
+object RandomSongJob: Job(
     name = "random_song",
     description = "Plays a random song from a list",
     executionDelaySeconds = 3600

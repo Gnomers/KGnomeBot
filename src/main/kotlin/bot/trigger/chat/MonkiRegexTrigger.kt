@@ -7,7 +7,7 @@ import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-class MonkiRegexTrigger: Trigger(
+object MonkiRegexTrigger: Trigger(
     name = "monki_regex",
     description = "Sends a monki ascii when theres a message that reminds of our ape friend"
 ) {

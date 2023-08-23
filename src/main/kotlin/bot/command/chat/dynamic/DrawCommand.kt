@@ -10,7 +10,7 @@ import io.ktor.client.request.forms.*
 import io.ktor.utils.io.*
 import java.net.SocketTimeoutException
 
-class DrawCommand: Command(
+object DrawCommand: Command(
     name = "draw",
     description = "Let gnome show you his artistic skills",
     hasSubCommand = true

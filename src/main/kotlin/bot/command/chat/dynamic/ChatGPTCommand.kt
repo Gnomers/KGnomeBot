@@ -5,7 +5,7 @@ import bot.core.service.chatgpt.ChatGPTService
 import dev.kord.core.behavior.channel.withTyping
 import dev.kord.core.event.message.MessageCreateEvent
 
-class ChatGPTCommand: Command(
+object ChatGPTCommand: Command(
     name = "gpt",
     description = "Boring chat without the Gnome magic.",
     hasSubCommand = true

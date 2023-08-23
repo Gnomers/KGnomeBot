@@ -6,7 +6,7 @@ import bot.core.voice.SoundPlayerManager
 import dev.kord.core.event.message.MessageCreateEvent
 
 
-class MainSongCommand: Command(
+object MainSongCommand: Command(
     name = "song",
     description = "Plays the latest hit"
 ) {

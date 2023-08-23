@@ -4,7 +4,7 @@ import bot.command.Command
 import bot.core.JobRegistrator
 import dev.kord.core.event.message.MessageCreateEvent
 
-class ShowJobsCommand: Command(
+object ShowJobsCommand: Command(
     name = "jobs",
     description = "Shows all current jobs"
 ) {

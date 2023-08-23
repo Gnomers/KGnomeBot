@@ -5,7 +5,7 @@ import bot.core.service.MainSongService
 import dev.kord.core.event.message.MessageCreateEvent
 
 
-class SetMainSongCommand: Command(
+object SetMainSongCommand: Command(
     name = "setsong",
     description = "Sets the main song for Gnome to play",
     hasSubCommand = true

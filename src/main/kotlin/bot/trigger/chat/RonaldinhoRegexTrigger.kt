@@ -8,7 +8,7 @@ import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-class RonaldinhoRegexTrigger: Trigger(
+object RonaldinhoRegexTrigger: Trigger(
     name = "ronaldinho_regex",
     description = "Plays the classic RONALDINHO SOCCER sound when the regex matches"
 ) {

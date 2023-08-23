@@ -8,7 +8,7 @@ import java.time.LocalDate
 import kotlin.random.Random
 
 
-class SongOfTheDayCommand: Command(
+object SongOfTheDayCommand: Command(
     name = "sotd",
     description = "Plays one of the good ol' songs"
 ) {

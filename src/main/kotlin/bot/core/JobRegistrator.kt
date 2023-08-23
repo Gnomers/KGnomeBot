@@ -3,6 +3,7 @@ package bot.core
 import bot.core.exception.DuplicateClassExcpetion
 import bot.job.Job
 import dev.kord.core.kordLogger
+import org.reflections.Reflections
 
 object JobRegistrator {
 
@@ -11,8 +12,9 @@ object JobRegistrator {
     suspend fun registerJobs() {
         kordLogger.info("Starting JobRegistrator")
 
-        Job::class.sealedSubclasses.forEach { clazz ->
-            val instance = clazz.constructors.first { it.parameters.isEmpty() }.call()
+        val subClasses = Reflections("bot.job").getSubTypesOf(Job::class.java)
+        subClasses.forEach { clazz ->
+            val instance = clazz.kotlin.objectInstance!!
 
             runningJobs.getOrDefault(instance.name, null)?.let {
                 // command already exists

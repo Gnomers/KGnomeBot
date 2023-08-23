@@ -5,7 +5,7 @@ import bot.constants.GNOME_COMMAND_PREFIXES
 import bot.core.CommandHandler
 import dev.kord.core.event.message.MessageCreateEvent
 
-class HelpCommand: Command(
+object HelpCommand: Command(
     name = "help",
     description = "Displays information on all commands"
 ) {
