@@ -16,8 +16,8 @@ import net.iharder.Base64
 import kotlin.random.Random
 
 class VoiceJoinSoundTrigger : Trigger(
-    name = "custom_entry",
-    description = "Plays a configured sound when an user joins the voice chat"
+    name = "voice_join_sound",
+    description = "Plays a configured sound or a random sound when an user joins the voice chat"
 ) {
     val om = ObjectMapper().registerKotlinModule()
 
