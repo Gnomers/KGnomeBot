@@ -15,7 +15,7 @@ object RandomSongJob: Job(
     description = "Plays a random song from a list",
     executionDelaySeconds = 3600
 ) {
-    val RANDOM_SOUND_CHANCE = 0.08 // 8%
+    val RANDOM_SOUND_CHANCE = 0.1 // 10%
     override suspend fun execute() {
 
         val songOfTheDay = IMPORTANT_SONGS.random(Random(LocalDate.now().dayOfYear))
