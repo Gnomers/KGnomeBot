@@ -6,7 +6,6 @@ import bot.getKordInstance
 import bot.utilities.getFirstPopulatedChannel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import java.time.LocalDate
 import kotlin.random.Random
 
 
@@ -18,7 +17,7 @@ object RandomSongJob: Job(
     val RANDOM_SOUND_CHANCE = 0.1 // 10%
     override suspend fun execute() {
 
-        val songOfTheDay = IMPORTANT_SONGS.random(Random(LocalDate.now().dayOfYear))
+        val luckySong = IMPORTANT_SONGS.random()
         // Random.nextDouble() returns a double from 0 (inclusive) to 1 (exclusive)
         if(Random.nextDouble() < RANDOM_SOUND_CHANCE) {
             // for every guild this server is on, get a channel with a VoiceState
@@ -27,7 +26,7 @@ object RandomSongJob: Job(
                 .map { it.getFirstPopulatedChannel() }
                 .filterNotNull()
                 .collect {
-                    SoundPlayerManager.playYoutubeVideoOnChannel(voiceChannel = it, video = songOfTheDay)
+                    SoundPlayerManager.playYoutubeVideoOnChannel(voiceChannel = it, video = luckySong)
                 }
         }
     }
