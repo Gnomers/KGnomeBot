@@ -22,6 +22,7 @@ enum class Sound(val path: String) {
     PALMEIRAS("audio/palmeiras.mp3"),
     RONALDINHO_SOCCER("audio/ronaldinho_soccer.mp3"),
     JOHN_ELDEN_RING("audio/john_elden_ring.mp3"),
+    E_O_PIX("audio/e_o_pix.mp3"),
     USSR_ANTHEM("audio/ussr_anthem.mp3"),
     AMOGUS("audio/amogus.mp3");
 
