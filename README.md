@@ -42,11 +42,13 @@ The environment variable CUSTOM_ENTRY_CONFIG_BASE64 expects a JSON converted to 
   "data": [
     {
       "user_id": "snowflake_id",
-      "sound": "SOUND_ENUM_NAME"
+      "sound": "SOUND_ENUM_NAME",
+      "tip": "John Doe"
     },
     {
       "user_id": "snowflake_id_2",
-      "sound": "SOUND_ENUM_NAME"
+      "sound": "SOUND_ENUM_NAME",
+      "tip": "Fulano de Tal"
     }
   ]
 }

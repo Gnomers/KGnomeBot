@@ -8,6 +8,7 @@ data class CustomEntryConfiguration(
     data class Data(
         @JsonProperty("user_id")
         val userId: String,
-        val sound: String
+        val sound: String,
+        val tip: String
     )
 }
