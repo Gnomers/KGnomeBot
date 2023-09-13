@@ -18,7 +18,7 @@ object GreenRegexTrigger: Trigger(
         kordInstance.onIgnoringBots<MessageCreateEvent> {
             val message = this.message.content
             if (!message.isCommand() && message.matches(regex)) {
-                SoundPlayerManager.playSoundForMessage(this, Sound.VIGOR_133X)
+                SoundPlayerManager.playSoundForMessage(this, Sound.QUE_CHEIRO)
             }
         }
     }
