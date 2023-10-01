@@ -2,6 +2,7 @@ package bot.core.voice
 
 import bot.constants.USER_MUST_BE_IN_VOICE_CHANNEL
 import bot.utilities.Sound
+import bot.utilities.isCommand
 import bot.utilities.isValidURL
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
@@ -80,7 +81,7 @@ object SoundPlayerManager {
         val member = event.member
         val voiceChannel = member?.getVoiceState()?.getChannelOrNull()
 
-        if (member == null || voiceChannel == null) {
+        if (event.message.content.isCommand() && member == null || voiceChannel == null) {
             event.message.channel.createMessage(USER_MUST_BE_IN_VOICE_CHANNEL)
             return
         }
@@ -92,7 +93,7 @@ object SoundPlayerManager {
         val member = event.member
         val voiceChannel = member?.getVoiceState()?.getChannelOrNull()
 
-        if (member == null || voiceChannel == null) {
+        if (event.message.content.isCommand() && member == null || voiceChannel == null) {
             event.message.channel.createMessage(USER_MUST_BE_IN_VOICE_CHANNEL)
             return
         }
