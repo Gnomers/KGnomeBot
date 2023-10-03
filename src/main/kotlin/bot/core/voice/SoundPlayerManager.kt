@@ -81,24 +81,24 @@ object SoundPlayerManager {
         val member = event.member
         val voiceChannel = member?.getVoiceState()?.getChannelOrNull()
 
-        if (event.message.content.isCommand() && member == null || voiceChannel == null) {
+        if (event.message.content.isCommand() && (member == null || voiceChannel == null)) {
             event.message.channel.createMessage(USER_MUST_BE_IN_VOICE_CHANNEL)
             return
         }
 
-        playSoundOnChannel(voiceChannel, sound)
+        voiceChannel?.let { playSoundOnChannel(it, sound) }
     }
 
     suspend fun playYoutubeForMessage(event: MessageCreateEvent, video: String) {
         val member = event.member
         val voiceChannel = member?.getVoiceState()?.getChannelOrNull()
 
-        if (event.message.content.isCommand() && member == null || voiceChannel == null) {
+        if (event.message.content.isCommand() && (member == null || voiceChannel == null)) {
             event.message.channel.createMessage(USER_MUST_BE_IN_VOICE_CHANNEL)
             return
         }
 
-        playYoutubeVideoOnChannel(event.message.channel, voiceChannel, video)
+        voiceChannel?.let { playYoutubeVideoOnChannel(event.message.channel, it, video) }
     }
 
     private fun createPlayerManager(): DefaultAudioPlayerManager {
