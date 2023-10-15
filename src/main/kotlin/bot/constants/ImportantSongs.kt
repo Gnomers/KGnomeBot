@@ -14,5 +14,5 @@ val IMPORTANT_SONGS = listOf(
     "https://www.youtube.com/watch?v=cffvsvdmgQI", // Fitgirl Repacks
     "https://www.youtube.com/watch?v=SWkFKsQT98w", // Eu queria mudar
     "https://www.youtube.com/watch?v=TFdO7oqkMzI", // Saveiro pega no breu
-    "https://www.youtube.com/watch?v=CqnU_sJ8V-E", // Free Bird
+    "https://www.youtube.com/watch?v=6qNHTriYVuA", // Free Bird Solo
 )
