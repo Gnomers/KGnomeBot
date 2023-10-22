@@ -39,10 +39,10 @@ object VoiceJoinSoundTrigger : Trigger(
             if(state.channelId == null ||
                 member.isBot ||
                 // we will ignore any mute/deaf/live/in-voice changes
-//                isCommonVoiceChatAction(this.old, this.state)
 
-                // TESTING, UNCOMMENT ABOVE LINE
-                this.old != null
+                //isCommonVoiceChatAction(this.old, this.state)
+                // TEST - UNCOMMENT ABOVE LINE LATER
+                this.old?.getChannelOrNull() == null
             ) {
                 return@onIgnoringBots
             }
