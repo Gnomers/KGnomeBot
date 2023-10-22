@@ -4,7 +4,6 @@ import bot.constants.CUSTOM_ENTRY_ENV_VAR
 import bot.core.voice.SoundPlayerManager
 import bot.trigger.Trigger
 import bot.utilities.Sound
-import bot.utilities.isCommonVoiceChatAction
 import bot.utilities.onIgnoringBots
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -40,7 +39,10 @@ object VoiceJoinSoundTrigger : Trigger(
             if(state.channelId == null ||
                 member.isBot ||
                 // we will ignore any mute/deaf/live/in-voice changes
-                isCommonVoiceChatAction(this.old, this.state)
+//                isCommonVoiceChatAction(this.old, this.state)
+
+                // TESTING, UNCOMMENT ABOVE LINE
+                this.old != null
             ) {
                 return@onIgnoringBots
             }
