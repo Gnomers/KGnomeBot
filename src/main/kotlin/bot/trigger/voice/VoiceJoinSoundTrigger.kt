@@ -42,7 +42,7 @@ object VoiceJoinSoundTrigger : Trigger(
 
                 //isCommonVoiceChatAction(this.old, this.state)
                 // TEST - UNCOMMENT ABOVE LINE LATER
-                this.old?.getChannelOrNull() == null
+                this.old?.getChannelOrNull() != null
             ) {
                 return@onIgnoringBots
             }
