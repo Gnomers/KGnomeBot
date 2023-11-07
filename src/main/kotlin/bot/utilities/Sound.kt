@@ -29,6 +29,7 @@ enum class Sound(val path: String) {
     SHADOW_WIZARD("audio/shadow_wizard.mp3"),
     USSR_ANTHEM("audio/ussr_anthem.mp3"),
     MORTAL_KOMBAT("audio/mortal_kombat.mp3"),
+    THANKS_FOR_THE_RIDE("audio/thanks_for_the_ride.mp3"),
     AMOGUS("audio/amogus.mp3");
 
     fun getTrack(): AudioTrack {
