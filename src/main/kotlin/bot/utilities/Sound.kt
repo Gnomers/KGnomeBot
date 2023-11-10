@@ -63,7 +63,8 @@ enum class Sound(val path: String) {
             PALMEIRAS,
             FALICEU,
             RONALDINHO_SOCCER,
-            JOHN_ELDEN_RING
+            JOHN_ELDEN_RING,
+            THANKS_FOR_THE_RIDE
         )
     }
 }
