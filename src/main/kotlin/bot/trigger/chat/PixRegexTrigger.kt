@@ -12,7 +12,7 @@ object PixRegexTrigger: Trigger(
     name = "monki_regex",
     description = "Sends a monki ascii when theres a message that reminds of our ape friend"
 ) {
-    val regex = Regex(".*pix.*|.*p.*i.*x.*|.*nada ainda.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+    val regex = Regex(".*pix.*|.*nada ainda.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {

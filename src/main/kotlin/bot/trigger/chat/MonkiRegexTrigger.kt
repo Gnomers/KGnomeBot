@@ -11,7 +11,7 @@ object MonkiRegexTrigger: Trigger(
     name = "monki_regex",
     description = "Sends a monki ascii when theres a message that reminds of our ape friend"
 ) {
-    val regex = Regex(".*m.*o.*n.*k.*e.*y.*|.*m.*o.*n.*k.*i.*|.*m.*a.*c.*a.*c.*o.*|.*m.*a.*m.*a.*c.*o.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+    val regex = Regex(".*m.*o.*n.*k.*e.*y.*|.*monki.*|.*m.*a.*c.*a.*c.*o.*|.*mamaco.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {

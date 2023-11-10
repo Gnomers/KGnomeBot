@@ -12,7 +12,7 @@ object GreenRegexTrigger: Trigger(
     name = "green_regex",
     description = "\"A friend with weed is a friend indeed\" - Leprechaun"
 ) {
-    val regex = Regex(".*green.*|.*weed.*|.*erva.*|.*maconha.*|.*m.*a.*c.*o.*n.*h.*a.*|.*w.*e.*e.*d.*|.*verde.*|.*verdinha.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+    val regex = Regex(".*green.*|.*weed.*|.*erva.*|.*maconha.*|.*verde.*|.*verdinha.*|.*marconha.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {

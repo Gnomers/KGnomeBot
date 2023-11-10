@@ -12,7 +12,7 @@ object HmmRegexTrigger: Trigger(
     name = "hmm_regex",
     description = "We are not sponsored by Vigor"
 ) {
-    val regex = Regex(".*hmm.*|.*vigor.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+    val regex = Regex(".*hmm.*|.*vigor.*|.*requeijão.*|.*requeijao.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {
