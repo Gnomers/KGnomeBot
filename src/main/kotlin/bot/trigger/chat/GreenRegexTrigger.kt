@@ -13,12 +13,13 @@ object GreenRegexTrigger: Trigger(
     description = "\"A friend with weed is a friend indeed\" - Leprechaun"
 ) {
     val regex = Regex(".*green.*|.*weed.*|.*erva.*|.*maconha.*|.*verde.*|.*verdinha.*|.*marconha.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
-
+    val POSSIBLE_SOUNDS = listOf(Sound.LEPRECHAUN, Sound.QUE_CHEIRO)
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {
             val message = this.message.content
             if (!message.isCommand() && message.matches(regex)) {
-                SoundPlayerManager.playSoundForMessage(this, Sound.QUE_CHEIRO)
+                val sound = POSSIBLE_SOUNDS.random()
+                SoundPlayerManager.playSoundForMessage(this, sound)
             }
         }
     }
