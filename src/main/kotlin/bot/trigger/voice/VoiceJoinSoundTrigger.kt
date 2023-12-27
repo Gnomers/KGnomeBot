@@ -52,9 +52,9 @@ object VoiceJoinSoundTrigger : Trigger(
                 config.data.firstOrNull {
                     it.userId == member.id.toString()
                 }?.let {
-                    kordLogger.info("User id=${member.id} tip=${it.tip} has a CustomEntryConfig match. sound=${it.sound} event=${this.javaClass} customContext=${this.customContext}")
+                    kordLogger.info("User id=${member.id} tip=${it.tip} has a CustomEntryConfig match. sounds=${it.sounds} event=${this.javaClass} customContext=${this.customContext}")
                     // parse the sound
-                    val sound = Sound.valueOf(it.sound)
+                    val sound = Sound.valueOf(it.sounds.random())
                     member.getVoiceState().getChannelOrNull()?.let { channel ->
                         SoundPlayerManager.playSoundOnChannel(channel, sound)
                     }
