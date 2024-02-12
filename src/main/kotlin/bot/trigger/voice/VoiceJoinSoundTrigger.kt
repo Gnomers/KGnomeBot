@@ -65,6 +65,7 @@ object VoiceJoinSoundTrigger : Trigger(
                 kordLogger.info("User id=${member.id} has no CustomEntryConfig, checking random sound chance")
                 if(Random.nextDouble() < TRIGGER_CHANCE) {
                     kordLogger.info("Triggered ${this::class.simpleName} chance")
+                    // TODO avoid playing a sound when it is a custom_entry_sound. Only play it if the user is already in the channel
                     val sound = Sound.COMMON_SOUND_LIST.random()
                     member.getVoiceState().getChannelOrNull()?.let {
                         SoundPlayerManager.playSoundOnChannel(it, sound)
