@@ -58,12 +58,10 @@ enum class Sound(val path: String) {
     companion object {
         val COMMON_SOUND_LIST = listOf(
             WOO,
-            CS,
             HM_MONKI,
             BIG_OL_FART,
             AMOGUS,
             PALMEIRAS,
-            FALICEU,
             THANKS_FOR_THE_RIDE,
             SON_OF_BEITCH,
             RAP_DO_VEGETA
