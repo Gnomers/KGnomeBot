@@ -18,7 +18,7 @@ object PipipiRegexTrigger: Trigger(
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent> {
             val message = this.message.content
-            if (!message.isCommand() && message.matches(GreenRegexTrigger.regex)) {
+            if (!message.isCommand() && message.matches(regex)) {
                 val sound = Sound.PIPIPI
                 SoundPlayerManager.playSoundForMessage(this, sound)
             }
