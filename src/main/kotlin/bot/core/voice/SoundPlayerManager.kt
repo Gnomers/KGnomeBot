@@ -31,11 +31,6 @@ import kotlinx.coroutines.runBlocking
 @OptIn(KordVoice::class)
 object SoundPlayerManager {
 
-    init {
-        // warming up some singletons, not sure if helps
-        createPlayerManager()
-    }
-
     // here we keep track of active voice connections
     val connections: MutableMap<Snowflake, VoiceConnection> = mutableMapOf()
     val players: MutableMap<AudioPlayer, VoiceConnection> = mutableMapOf()
