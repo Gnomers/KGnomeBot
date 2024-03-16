@@ -78,10 +78,10 @@ Head into the `bot.trigger` package and create a object that extends `Trigger`; 
 object HelloTrigger: Trigger(
     name = "hello_trigger",
     description = "Triggers a \"hello\" whenever someone sends a message" 
-) {
+), Loggable {
     override suspend fun register(kordInstance: Kord) {
         // when a message is sent 
-        kordInstance.onIgnoringBots<MessageCreateEvent> {
+        kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
             this.message.channel.createMessage("Hello!")
         }
     }

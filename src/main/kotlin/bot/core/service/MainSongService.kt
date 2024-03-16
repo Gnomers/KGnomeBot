@@ -1,14 +1,14 @@
 package bot.core.service
 
-import dev.kord.core.kordLogger
+import bot.logging.Loggable
 
-object MainSongService {
+object MainSongService : Loggable {
     private var mainSong: String? = null
 
     fun getSong() = mainSong
 
     fun setSong(song: String) {
-        kordLogger.info("Song of the day is being set to song=${song}")
+        logger.info("Song of the day is being set to song=${song}")
         mainSong = song
     }
 }

@@ -2,15 +2,15 @@ package bot.core
 
 import bot.core.exception.DuplicateClassExcpetion
 import bot.job.Job
-import dev.kord.core.kordLogger
+import bot.logging.Loggable
 import org.reflections.Reflections
 
-object JobRegistrator {
+object JobRegistrator: Loggable {
 
     // name -> Job class
     val runningJobs: MutableMap<String, Job> = mutableMapOf()
     suspend fun registerJobs() {
-        kordLogger.info("Starting JobRegistrator")
+        logger.info("Starting JobRegistrator")
 
         val subClasses = Reflections("bot.job").getSubTypesOf(Job::class.java)
         subClasses.forEach { clazz ->
@@ -24,11 +24,11 @@ object JobRegistrator {
             // This will create the coroutine inside it
             instance.register()
 
-            kordLogger.info("Adding \"${instance.name}\" job to the job list")
+            logger.info("Adding \"${instance.name}\" job to the job list")
             runningJobs[instance.name.lowercase()] = instance
         }
 
-        kordLogger.info("JobRegistrator finished with jobs=${runningJobs.values.map { it.name }}")
+        logger.info("JobRegistrator finished with jobs=${runningJobs.values.map { it.name }}")
     }
 }
 

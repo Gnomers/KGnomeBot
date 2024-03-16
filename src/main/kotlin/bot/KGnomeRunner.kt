@@ -12,11 +12,11 @@ import bot.utilities.onIgnoringBots
 import bot.utilities.startsWithAny
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
-import dev.kord.core.kordLogger
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 import io.github.cdimascio.dotenv.dotenv
-import java.util.*
+import org.slf4j.LoggerFactory
+import java.util.Locale
 
 
 private lateinit var kordInstance: Kord
@@ -24,17 +24,18 @@ private lateinit var kordInstance: Kord
 class KGnomeRunner
 
 suspend fun main(vararg args: String) {
+    val logger = LoggerFactory.getLogger("MAIN")
     Locale.setDefault(Locale("pt", "BR"))
 
     kordInstance = Kord(
-        token = args.firstOrNull()?.also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
-            ?: dotenv()[DISCORD_TOKEN_ENV_VAR]?.also { kordLogger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
+        token = args.firstOrNull()?.also { logger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
+            ?: dotenv()[DISCORD_TOKEN_ENV_VAR]?.also { logger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
             ?: error("token required")
     )
 
-    kordInstance.onIgnoringBots<MessageCreateEvent> {
+    kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
         val content = this.message.content
-        kordLogger.info("Incoming message \"${content}\"")
+        logger.info("Incoming message \"${content}\"")
         if (content.startsWithAny(GNOME_COMMAND_PREFIXES)) {
             CommandHandler.handle(
                 event = this,

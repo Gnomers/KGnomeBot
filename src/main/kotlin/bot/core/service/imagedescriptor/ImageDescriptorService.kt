@@ -1,13 +1,13 @@
 package bot.core.service.imagedescriptor
 
 import bot.constants.HUGGING_FACE_TOKEN_ENV_VAR
+import bot.logging.Loggable
 import bot.utilities.buildDefault
 import bot.utilities.isValidURL
 import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
-import dev.kord.core.kordLogger
 import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -17,10 +17,10 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.apache.http.HttpStatus
 
-object ImageDescriptorService {
+object ImageDescriptorService: Loggable {
     private val TOKEN = (dotenv()[HUGGING_FACE_TOKEN_ENV_VAR] ?: null)
-        ?.also { kordLogger.info("$HUGGING_FACE_TOKEN_ENV_VAR length=${it.length}") }
-        ?: also { kordLogger.info("$HUGGING_FACE_TOKEN_ENV_VAR is null") }
+        ?.also { logger.info("$HUGGING_FACE_TOKEN_ENV_VAR length=${it.length}") }
+        ?: also { logger.info("$HUGGING_FACE_TOKEN_ENV_VAR is null") }
 
     val models = mapOf(
         // accurate
@@ -54,13 +54,13 @@ object ImageDescriptorService {
                         .addHeader("Content-Type", "text/plain")
                         .build()
 
-                    kordLogger.info("Request: method=${request.method()} body=${request.body()} url=${request.url()}}")
+                    logger.info("Request: method=${request.method()} body=${request.body()} url=${request.url()}}")
 
                     val response = client.newCall(request).execute()
                     val responseBody = response.body().string()
                     val statusCode = response.code()
 
-                    kordLogger.info("Response: status=${statusCode} body=$responseBody")
+                    logger.info("Response: status=${statusCode} body=$responseBody")
 
                     thisResponse.append(
                         when (statusCode) {

@@ -18,6 +18,7 @@ dependencies {
 
     // Logging
     implementation("org.slf4j:slf4j-simple:2.0.3")
+    implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
 
     // Audio player
     implementation("com.sedmelluq:lavaplayer:1.3.73")

@@ -1,6 +1,7 @@
 package bot.core.voice
 
 import bot.constants.USER_MUST_BE_IN_VOICE_CHANNEL
+import bot.logging.Loggable
 import bot.utilities.Sound
 import bot.utilities.isCommand
 import bot.utilities.isValidURL
@@ -22,14 +23,13 @@ import dev.kord.core.behavior.channel.BaseVoiceChannelBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.channel.connect
 import dev.kord.core.event.message.MessageCreateEvent
-import dev.kord.core.kordLogger
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.VoiceConnection
 import kotlinx.coroutines.runBlocking
 
 
 @OptIn(KordVoice::class)
-object SoundPlayerManager {
+object SoundPlayerManager: Loggable {
 
     // here we keep track of active voice connections
     val connections: MutableMap<Snowflake, VoiceConnection> = mutableMapOf()
@@ -72,7 +72,7 @@ object SoundPlayerManager {
             connections[guildId] = connection
             players[player] = connection
         }.onFailure {
-            kordLogger.error("An error occurred, shutting down connection causing exception=${it}")
+            logger.error("An error occurred, shutting down connection causing exception=${it}")
             stop(guildId)
         }
     }
@@ -117,11 +117,11 @@ object SoundPlayerManager {
                 this.addListener {
                     when (it) {
                         is TrackEndEvent -> runBlocking {
-                            kordLogger.info("Track ended, stopping player. track=${it.track.info.title}")
+                            logger.info("Track ended, stopping player. track=${it.track.info.title}")
                             stop(players[it.player]!!.data.guildId)
                         }
                         is TrackExceptionEvent, is TrackStuckEvent -> runBlocking {
-                            kordLogger.error("An unexpected event occurred while playing an Audio. event=$it")
+                            logger.error("An unexpected event occurred while playing an Audio. event=$it")
                             stop(players[it.player]!!.data.guildId)
                         }
                     }
@@ -137,7 +137,7 @@ object SoundPlayerManager {
 
         override fun trackLoaded(track: AudioTrack?) {
             runBlocking {
-                kordLogger.info("Now playing: ${track?.info?.title}")
+                logger.info("Now playing: ${track?.info?.title}")
                 channel?.createMessage("Now playing: ${track?.info?.title}")
             }
             player.playTrack(track)
@@ -147,7 +147,7 @@ object SoundPlayerManager {
             val firstTrack = playlist?.tracks?.firstOrNull()
             firstTrack?.let {
                 runBlocking {
-                    kordLogger.info("Now playing: ${it.info?.title}")
+                    logger.info("Now playing: ${it.info?.title}")
                     channel?.createMessage("Now playing: ${it.info?.title}")
                 }
                 player.playTrack(it)
@@ -156,7 +156,7 @@ object SoundPlayerManager {
 
         override fun noMatches() {
             runBlocking {
-                kordLogger.warn("Couldn't find the video")
+                logger.warn("Couldn't find the video")
                 channel?.createMessage("Oh no, even with my magic powers I could not find that video :(")
             }
         }
@@ -165,7 +165,7 @@ object SoundPlayerManager {
             runBlocking {
                 channel?.createMessage("Oh no, I've been gnomed, something went very wrong")
             }
-            kordLogger.error("Something went wrong loading the video")
+            logger.error("Something went wrong loading the video")
             runBlocking {
                 stop(players[player]!!.data.guildId)
             }

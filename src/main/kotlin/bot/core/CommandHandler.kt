@@ -4,11 +4,11 @@ import bot.command.Command
 import bot.constants.NO_SUBCOMMAND
 import bot.constants.UNKNOWN_COMMAND
 import bot.core.exception.DuplicateClassExcpetion
+import bot.logging.Loggable
 import dev.kord.core.event.message.MessageCreateEvent
-import dev.kord.core.kordLogger
 import org.reflections.Reflections
 
-object CommandHandler {
+object CommandHandler : Loggable {
     // name -> command class
     val registeredCommands: MutableMap<String, Command> = mutableMapOf()
 
@@ -21,11 +21,11 @@ object CommandHandler {
                 // command already exists
                 throw DuplicateClassExcpetion("Command ${instance.name} is duplicated")
             }
-            kordLogger.info("Adding \"${instance.name}\" command to the command list")
+            logger.info("Adding \"${instance.name}\" command to the command list")
             registeredCommands[instance.name.lowercase()] = instance
         }
 
-        kordLogger.info("CommandHandler created with commands=${registeredCommands.keys}")
+        logger.info("CommandHandler created with commands=${registeredCommands.keys}")
     }
 
     suspend fun handle(event: MessageCreateEvent, args: List<String>) {
@@ -36,7 +36,7 @@ object CommandHandler {
         sentCommand?.let {
             // invoke handler
             registeredCommands.getOrDefault(sentCommand, null)?.let {
-                kordLogger.info("Invoking command=${sentCommand} with content=\"${message.content}\"")
+                logger.info("Invoking command=${sentCommand} with content=\"${message.content}\"")
 
                 val subCommand = runCatching {
                     event.message.content.split("${it.name} ", limit = 2)[1]

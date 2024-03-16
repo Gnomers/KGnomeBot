@@ -2,6 +2,7 @@ package bot.trigger.voice
 
 import bot.constants.CUSTOM_ENTRY_ENV_VAR
 import bot.core.voice.SoundPlayerManager
+import bot.logging.Loggable
 import bot.trigger.Trigger
 import bot.utilities.Sound
 import bot.utilities.onIgnoringBots
@@ -9,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import dev.kord.core.Kord
 import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.core.kordLogger
 import io.github.cdimascio.dotenv.dotenv
 import net.iharder.Base64
 import kotlin.random.Random
@@ -17,12 +17,12 @@ import kotlin.random.Random
 object VoiceJoinSoundTrigger : Trigger(
     name = "voice_join_sound",
     description = "Plays a configured sound or a random sound when an user joins the voice chat"
-) {
+), Loggable {
     val om = ObjectMapper().registerKotlinModule()
 
     val config = runCatching {
         dotenv()[CUSTOM_ENTRY_ENV_VAR]?.let {
-            kordLogger.info("Parsing $CUSTOM_ENTRY_ENV_VAR=$it")
+            logger.info("Parsing $CUSTOM_ENTRY_ENV_VAR=$it")
             om.readValue(Base64.decode(it), CustomEntryConfiguration::class.java)
         }
     }.getOrNull()
@@ -31,10 +31,10 @@ object VoiceJoinSoundTrigger : Trigger(
 
     override suspend fun register(kordInstance: Kord) {
         if (config?.data == null) {
-            kordLogger.warn("Ignoring CustomEntryTrigger registration because $CUSTOM_ENTRY_ENV_VAR is empty or invalid")
+            logger.warn("Ignoring CustomEntryTrigger registration because $CUSTOM_ENTRY_ENV_VAR is empty or invalid")
             return
         }
-        kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
+        kordInstance.onIgnoringBots<VoiceStateUpdateEvent>(logger = logger) {
             val member = state.getMember()
             if(state.channelId == null ||
                 member.isBot ||
@@ -52,7 +52,7 @@ object VoiceJoinSoundTrigger : Trigger(
                 config.data.firstOrNull {
                     it.userId == member.id.toString()
                 }?.let {
-                    kordLogger.info("User id=${member.id} tip=${it.tip} has a CustomEntryConfig match. sounds=${it.sounds} event=${this.javaClass} customContext=${this.customContext}")
+                    logger.info("User id=${member.id} tip=${it.tip} has a CustomEntryConfig match. sounds=${it.sounds} event=${this.javaClass} customContext=${this.customContext}")
                     // parse the sound
                     val sound = Sound.valueOf(it.sounds.random())
                     member.getVoiceState().getChannelOrNull()?.let { channel ->
@@ -62,9 +62,9 @@ object VoiceJoinSoundTrigger : Trigger(
                 }
 
                 // Has no config match
-                kordLogger.info("User id=${member.id} has no CustomEntryConfig, checking random sound chance")
+                logger.info("User id=${member.id} has no CustomEntryConfig, checking random sound chance")
                 if(Random.nextDouble() < TRIGGER_CHANCE) {
-                    kordLogger.info("Triggered ${this::class.simpleName} chance")
+                    logger.info("Triggered ${this::class.simpleName} chance")
                     // TODO avoid playing a sound when it is a custom_entry_sound. Only play it if the user is already in the channel
                     val sound = Sound.COMMON_SOUND_LIST.random()
                     member.getVoiceState().getChannelOrNull()?.let {
@@ -73,7 +73,7 @@ object VoiceJoinSoundTrigger : Trigger(
                 }
                 return@onIgnoringBots
             }.onFailure {
-                kordLogger.error("An error occured on ${this::class.simpleName}, error=${it}", it)
+                logger.error("An error occured on ${this::class.simpleName}, error=${it}", it)
             }
 
         }

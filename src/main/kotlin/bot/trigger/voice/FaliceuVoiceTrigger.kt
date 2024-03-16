@@ -1,6 +1,7 @@
 package bot.trigger.voice
 
 import bot.core.voice.SoundPlayerManager
+import bot.logging.Loggable
 import bot.trigger.Trigger
 import bot.utilities.Sound
 import bot.utilities.isDisconnect
@@ -14,11 +15,11 @@ import kotlin.random.Random
 object FaliceuVoiceTrigger : Trigger(
     name = "channel_left",
     description = "Sends out a \"faliceu\" when someone leaves the voice chat"
-) {
+), Loggable {
 
     private val TRIGGER_CHANCE = 0.5 // 50%
     override suspend fun register(kordInstance: Kord) {
-        kordInstance.onIgnoringBots<VoiceStateUpdateEvent> {
+        kordInstance.onIgnoringBots<VoiceStateUpdateEvent>(logger = logger) {
             delay(500)
             if (isDisconnect(this.old, this.state) && Random.nextDouble() < TRIGGER_CHANCE) {
                 this.old?.getChannelOrNull()?.let {
