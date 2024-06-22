@@ -22,6 +22,8 @@ object AwanLLMService : Loggable {
     private val mapper = ObjectMapper().registerKotlinModule()
     private const val ERROR_MESSAGE = "An error occurred... SOMEONE HELP THE GNOME!!!"
 
+    val MODELS = listOf("Mistral-7B-Instruct", "Awanllm-Llama-3-8B-Cumulus")
+
     val PROMPT = object {}.javaClass.classLoader.getResource("PROMPT_MINI.txt")!!.readText()
         .replace("{BEGIN_OF_TEXT}", "<|begin_of_text|>")
         .replace("{START_HEADER_ID}", "<|start_header_id|>")
@@ -37,9 +39,10 @@ object AwanLLMService : Loggable {
         val completePrompt = PROMPT.replace("{input}", input)
         val randomTemperature = Random.nextFloat()
         val mediaType = MediaType.parse("application/json")
+        val model = MODELS.random()
 
         val req = AwanLLMRequest(
-            model = "Awanllm-Llama-3-8B-Cumulus",
+            model = model,
             prompt = completePrompt,
             repetitionPenalty = 1.1,
             temperature = randomTemperature,
@@ -74,15 +77,15 @@ object AwanLLMService : Loggable {
             val responseBody = mapper.readValue<AwanLLMResponse>(content)
 
 
-            responseBody.choices.firstOrNull()?.text?.withTemperature(randomTemperature) ?: ERROR_MESSAGE
+            responseBody.choices.firstOrNull()?.text?.withTemperatureAndModel(randomTemperature, model) ?: ERROR_MESSAGE
         } catch (e: Exception) {
             logger.error("Error calling AwanLLM. error=${e.message}", e)
             return ERROR_MESSAGE
         }
     }
 
-    private fun String.withTemperature(temp: Float): String {
-         return "$this ($temp)"
+    private fun String.withTemperatureAndModel(temp: Float, model: String): String {
+         return "$this [$model | $temp]"
     }
 }
 
