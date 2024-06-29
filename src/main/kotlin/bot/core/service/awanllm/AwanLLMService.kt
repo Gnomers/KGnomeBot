@@ -87,7 +87,7 @@ object AwanLLMService : Loggable {
     }
 
     private fun String.withTemperatureAndModel(temp: Float, model: String): String {
-         return "$this [$model | $temp]"
+         return "$this [$temp]"
     }
 }
 
