@@ -14,7 +14,7 @@ dependencies {
     implementation(kotlin("reflect"))
 
     // Discord
-    implementation("dev.kord:kord-core-voice:0.13.1")
+    implementation("dev.kord:kord-core-voice:0.14.0")
 
     // Logging
     implementation("org.slf4j:slf4j-simple:2.0.3")

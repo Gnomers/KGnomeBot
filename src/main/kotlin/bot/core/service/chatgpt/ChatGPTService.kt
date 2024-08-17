@@ -9,7 +9,7 @@ import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
-import okio.ByteString
+import okio.ByteString.Companion.encodeUtf8
 
 object ChatGPTService: Loggable {
 
@@ -41,7 +41,7 @@ object ChatGPTService: Loggable {
         val request = Request.Builder()
                 .url("https://ai.fakeopen.com/v1/chat/completions")
                 .post(RequestBody.create(mediaType, json))
-                .header("Content-Length", ByteString.encodeUtf8(json).utf8().length.toString())
+                .header("Content-Length", json.encodeUtf8().utf8().length.toString())
                 .header("Authorization", "Bearer pk-this-is-a-real-free-pool-token-for-everyone")
                 .build()
 

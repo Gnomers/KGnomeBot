@@ -1,7 +1,7 @@
 package bot.job
 
 import bot.core.voice.SoundPlayerManager
-import bot.getKordInstance
+import bot.kordInstance
 import bot.utilities.Sound
 import bot.utilities.getFirstPopulatedChannel
 import kotlinx.coroutines.flow.filterNotNull
@@ -20,7 +20,7 @@ object RandomSoundJob: Job(
         if(Random.nextDouble() < RANDOM_SOUND_CHANCE) {
             // for every guild this server is on, get a channel with a VoiceState
             // TODO avoid playing a sound when it is a custom_entry_sound. Only play it if the user is already in the channel
-            getKordInstance()
+            kordInstance
                 .guilds
                 .map { it.getFirstPopulatedChannel() }
                 .filterNotNull()

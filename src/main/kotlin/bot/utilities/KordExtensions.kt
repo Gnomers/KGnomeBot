@@ -1,7 +1,10 @@
 package bot.utilities
 
 import dev.kord.core.Kord
+import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.VoiceState
 import dev.kord.core.event.Event
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
@@ -36,3 +39,9 @@ inline fun <reified T : Event> Kord.onIgnoringBots(
         .launchIn(scope)
 
 suspend fun Guild.getFirstPopulatedChannel() = this.voiceStates.firstOrNull()?.getChannelOrNull()
+
+suspend fun Member.disconnect() = this.edit {
+    voiceChannelId = null
+}
+
+fun VoiceState.isFullMuted() = this.isSelfMuted && this.isSelfDeafened

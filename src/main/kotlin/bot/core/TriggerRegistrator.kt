@@ -1,6 +1,6 @@
 package bot.core
 
-import bot.getKordInstance
+import bot.kordInstance
 import bot.logging.Loggable
 import bot.trigger.Trigger
 import org.reflections.Reflections
@@ -15,7 +15,7 @@ object TriggerRegistrator: Loggable {
         subClasses.forEach { clazz ->
             logger.info("Registering trigger for class=${clazz.simpleName}")
             val instance = clazz.kotlin.objectInstance!!
-            instance.register(getKordInstance())
+            instance.register(kordInstance)
             registeredTriggers.add(instance)
         }
 

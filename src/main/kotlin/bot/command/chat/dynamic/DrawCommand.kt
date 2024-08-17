@@ -6,8 +6,8 @@ import bot.core.service.imagedraw.ImageDrawingService
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.channel.withTyping
 import dev.kord.core.event.message.MessageCreateEvent
-import io.ktor.client.request.forms.*
-import io.ktor.utils.io.*
+import io.ktor.client.request.forms.ChannelProvider
+import io.ktor.utils.io.ByteReadChannel
 import java.net.SocketTimeoutException
 
 object DrawCommand: Command(

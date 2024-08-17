@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory
 import java.util.Locale
 
 
-private lateinit var kordInstance: Kord
+lateinit var kordInstance: Kord
 
 class KGnomeRunner
 
@@ -31,7 +31,9 @@ suspend fun main(vararg args: String) {
         token = args.firstOrNull()?.also { logger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
             ?: dotenv()[DISCORD_TOKEN_ENV_VAR]?.also { logger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
             ?: error("token required")
-    )
+    ) {
+
+    }
 
     kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
         val content = this.message.content
@@ -56,6 +58,3 @@ suspend fun main(vararg args: String) {
         intents += Intent.MessageContent
     }
 }
-
-
-fun getKordInstance() = kordInstance

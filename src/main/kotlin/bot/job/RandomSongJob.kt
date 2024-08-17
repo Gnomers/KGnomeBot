@@ -2,7 +2,7 @@ package bot.job
 
 import bot.constants.IMPORTANT_SONGS
 import bot.core.voice.SoundPlayerManager
-import bot.getKordInstance
+import bot.kordInstance
 import bot.utilities.getFirstPopulatedChannel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -21,7 +21,7 @@ object RandomSongJob: Job(
         // Random.nextDouble() returns a double from 0 (inclusive) to 1 (exclusive)
         if(Random.nextDouble() < RANDOM_SOUND_CHANCE) {
             // for every guild this server is on, get a channel with a VoiceState
-            getKordInstance()
+            kordInstance
                 .guilds
                 .map { it.getFirstPopulatedChannel() }
                 .filterNotNull()

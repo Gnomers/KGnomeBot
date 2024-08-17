@@ -1,13 +1,18 @@
 package bot.job
 
-import kotlinx.coroutines.*
+import bot.logging.Loggable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 
 abstract class Job(
     val name: String,
     val description: String,
     val executionDelaySeconds: Long // the job will execute every X seconds
-) {
+): Loggable {
 
     private var registered = false
 
@@ -25,6 +30,7 @@ abstract class Job(
                     delay(executionInMillis)
                 }
             } else {
+                logger.info("Job of name=${name} will not be registered, as its delay would be less than a second.")
                 execute()
             }
         }
