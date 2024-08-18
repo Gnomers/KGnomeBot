@@ -15,7 +15,7 @@ object FullMuteKickerJob : Job(
     executionDelaySeconds = 3600
 ) {
 
-    val ROUNDS_BEFORE_KICKING = 1
+    val ROUNDS_BEFORE_KICKING = 2
 
     // Could've used a collection of VoiceStates, but it is not a good class to check for equality.
     // Also it would (PROBABLY) be reset if the user re-entered between the checks
