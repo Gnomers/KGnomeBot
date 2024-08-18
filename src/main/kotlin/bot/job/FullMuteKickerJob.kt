@@ -15,7 +15,7 @@ object FullMuteKickerJob : Job(
     executionDelaySeconds = 3600
 ) {
 
-    val ROUNDS_BEFORE_KICKING = 2
+    val ROUNDS_BEFORE_KICKING = 1
 
     // Could've used a collection of VoiceStates, but it is not a good class to check for equality.
     // Also it would (PROBABLY) be reset if the user re-entered between the checks
@@ -40,7 +40,6 @@ object FullMuteKickerJob : Job(
 
                         else -> {
                             roundsMuted[it.userId] = roundsMuted[it.userId]!! + 1
-                            logger.info("Incremented rounds for ${it.userId}. Rounds: $roundsMuted")
                         }
                     }
                 } else {
