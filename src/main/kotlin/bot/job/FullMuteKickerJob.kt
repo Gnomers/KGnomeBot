@@ -18,7 +18,7 @@ object FullMuteKickerJob : Job(
     val ROUNDS_BEFORE_KICKING = 1
 
     // Could've used a collection of VoiceStates, but it is not a good class to check for equality.
-    // Also it would (PROBABLY) be reset if the user re-entered between the checks
+    // Also, it would (PROBABLY) be reset if the user re-entered between the checks
     private val roundsMuted = hashMapOf<Snowflake, Int>()
 
     override suspend fun execute() {
