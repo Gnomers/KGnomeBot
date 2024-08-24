@@ -7,6 +7,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven(url = "https://m2.dv8tion.net/releases")
+
 }
 
 dependencies {
@@ -22,8 +23,8 @@ dependencies {
 
     // Audio player
 //    implementation("com.sedmelluq:lavaplayer:1.3.47")
-    implementation(files("/libs/com.sedmelluq/lavaplayer/1.3.73/414880b4e42365a6d2f014b251edc02c6f073e00/lavaplayer-1.3.73.jar"))
-    implementation(files("/libs/com.sedmelluq/lava-common/1.1.2/c9e2c5192a93847edd6b96c2f93530fdcda85028/lava-common-1.1.2.jar"))
+    implementation(files("libs/com.sedmelluq/lavaplayer/1.3.73/414880b4e42365a6d2f014b251edc02c6f073e00/lavaplayer-1.3.73.jar"))
+    implementation(files("libs/com.sedmelluq/lava-common/1.1.2/c9e2c5192a93847edd6b96c2f93530fdcda85028/lava-common-1.1.2.jar"))
 //    implementation(files("/libs/com.sedmelluq/lavaplayer/1.3.77/89401c843d79108a69319bfc2e9e043335165ce5/lavaplayer-1.3.77.jar"))
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
