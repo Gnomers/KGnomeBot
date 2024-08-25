@@ -31,21 +31,22 @@ object FullMuteKickerJob : Job(
                     // kinda weird but ok
                     roundsMuted[it.userId] = roundsMuted.getOrDefault(it.userId, 0)
 
-                    when {
-                        roundsMuted[it.userId] == ROUNDS_BEFORE_KICKING -> {
-                            roundsMuted[it.userId] = 0
-                            member.disconnect()
-                            logger.info("[FullMuteKickerJob] User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted.")
-                        }
-
-                        else -> {
-                            roundsMuted[it.userId] = roundsMuted[it.userId]!! + 1
-                        }
+                    // they gotta go
+                    if (roundsMuted[it.userId] == ROUNDS_BEFORE_KICKING) {
+                        logger.info("[FullMuteKickerJob] User ${member.username} is about to be disconnected.") // log for troubleshooting purposes
+                        roundsMuted[it.userId] = 0
+                        member.disconnect()
+                        logger.info("[FullMuteKickerJob] User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted.")
+                    } else {
+                        // not their final life, increases count
+                        roundsMuted[it.userId] = roundsMuted[it.userId]!! + 1
                     }
                 } else {
+                    // not muted, reset count
                     roundsMuted[it.userId] = 0
                 }
             }
         logger.info("[FullMuteKickerJob] Round executed roundsMutedMap=$roundsMuted")
     }
 }
+
