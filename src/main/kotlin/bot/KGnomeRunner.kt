@@ -31,9 +31,7 @@ suspend fun main(vararg args: String) {
         token = args.firstOrNull()?.also { logger.info("$DISCORD_TOKEN_ENV_VAR taken from VM args") }
             ?: dotenv()[DISCORD_TOKEN_ENV_VAR]?.also { logger.info("$DISCORD_TOKEN_ENV_VAR found in dotenv") }
             ?: error("token required")
-    ) {
-
-    }
+    )
 
     kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
         val content = this.message.content
