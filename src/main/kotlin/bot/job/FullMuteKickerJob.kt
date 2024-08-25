@@ -35,7 +35,7 @@ object FullMuteKickerJob : Job(
                         roundsMuted[it.userId] == ROUNDS_BEFORE_KICKING -> {
                             roundsMuted[it.userId] = 0
                             member.disconnect()
-                            logger.info("User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted.")
+                            logger.info("[FullMuteKickerJob] User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted.")
                         }
 
                         else -> {
@@ -46,5 +46,6 @@ object FullMuteKickerJob : Job(
                     roundsMuted[it.userId] = 0
                 }
             }
+        logger.info("[FullMuteKickerJob] Round executed roundsMutedMap=$roundsMuted")
     }
 }
