@@ -12,7 +12,8 @@ import kotlin.random.Random
 object RandomSoundJob: Job(
     name = "random_sound_job",
     description = "Plays a random sound",
-    executionDelaySeconds = 600
+    // 30 min
+    executionDelaySeconds = 1800
 ) {
     val RANDOM_SOUND_CHANCE = 0.2 // 20%
     override suspend fun execute() {
