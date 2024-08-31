@@ -1,9 +1,9 @@
+package bot.trigger.voice
 
 import bot.constants.CUSTOM_ENTRY_ENV_VAR
 import bot.core.voice.SoundPlayerManager
 import bot.logging.Loggable
 import bot.trigger.Trigger
-import bot.trigger.voice.CustomEntryConfiguration
 import bot.utilities.Sound
 import bot.utilities.onIgnoringBots
 import com.fasterxml.jackson.databind.ObjectMapper
