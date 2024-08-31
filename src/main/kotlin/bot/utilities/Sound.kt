@@ -8,7 +8,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioReference
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.info.AudioTrackInfoBuilder
 
-
+// TODO refactor to make this sound loading thing a bit more dynamic by reading files
 enum class Sound(val path: String) {
     WOO("audio/woo.ogg"),
     BIG_OL_FART("audio/big_ol_fart.ogg"),
@@ -33,7 +33,8 @@ enum class Sound(val path: String) {
     LEPRECHAUN("audio/leprechaun.mp3"),
     SON_OF_BEITCH("audio/son_of_beitch.mp3"),
     PIPIPI("audio/pipipi.mp3"),
-    AMOGUS("audio/amogus.mp3");
+    AMOGUS("audio/amogus.mp3"),
+    SEU_MADRUGA_NOSSA("audio/seu_madruga_nossa.mp3");
 
     fun getTrack(): AudioTrack {
         val nonSeekableInputStream = NonSeekableInputStream(
@@ -66,7 +67,8 @@ enum class Sound(val path: String) {
             THANKS_FOR_THE_RIDE,
             SON_OF_BEITCH,
             RAP_DO_VEGETA,
-            PIPIPI
+            PIPIPI,
+            SEU_MADRUGA_NOSSA
         )
     }
 }

@@ -89,6 +89,7 @@ object SoundPlayerManager: Loggable {
         voiceChannel?.let { playSoundOnChannel(it, sound) }
     }
 
+    @Deprecated("Try using this someday https://github.com/lavalink-devs/youtube-source")
     suspend fun playYoutubeForMessage(event: MessageCreateEvent, video: String) {
         val member = event.member
         val voiceChannel = member?.getVoiceState()?.getChannelOrNull()
