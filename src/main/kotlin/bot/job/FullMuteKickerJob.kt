@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.flatMapMerge
 object FullMuteKickerJob : Job(
     name = "full_mute_kicker",
     description = "Kicks everyone who is fully muted (no mic and no sound)",
-    // 15 min
-    executionDelaySeconds = 900
+    // 40 min
+    executionDelaySeconds = 2400
 ) {
 
     val ROUNDS_BEFORE_KICKING = 1
