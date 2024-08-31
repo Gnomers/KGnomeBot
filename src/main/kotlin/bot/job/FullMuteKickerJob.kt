@@ -5,7 +5,6 @@ import bot.utilities.disconnect
 import bot.utilities.isFullMuted
 import dev.kord.common.entity.Snowflake
 import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.toList
 
 
 object FullMuteKickerJob : Job(
@@ -24,7 +23,7 @@ object FullMuteKickerJob : Job(
     override suspend fun execute() {
         kordInstance
             .guilds
-            .flatMapMerge { it -> it.voiceStates.also { println(it.toList()) } }
+            .flatMapMerge { it.voiceStates }
             .collect {
                 val member = it.getMember()
                 if (it.isFullMuted()) {
@@ -35,8 +34,8 @@ object FullMuteKickerJob : Job(
                     if (roundsMuted[it.userId] == ROUNDS_BEFORE_KICKING) {
                         logger.info("[FullMuteKickerJob] User ${member.username} is about to be disconnected.") // log for troubleshooting purposes
                         roundsMuted[it.userId] = 0
-                        member.disconnect()
-                        logger.info("[FullMuteKickerJob] User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted.")
+                        val postDisconnect = member.disconnect()
+                        logger.info("[FullMuteKickerJob] User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted. postDisconnectMember=$postDisconnect")
                     } else {
                         // not their final life, increases count
                         roundsMuted[it.userId] = roundsMuted[it.userId]!! + 1
@@ -46,7 +45,7 @@ object FullMuteKickerJob : Job(
                     roundsMuted[it.userId] = 0
                 }
             }
-        logger.info("[FullMuteKickerJob] Round executed roundsMutedMap=$roundsMuted")
+//        logger.info("[FullMuteKickerJob] Round executed roundsMutedMap=$roundsMuted")
     }
 }
 
