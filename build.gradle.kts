@@ -6,7 +6,7 @@ plugins {
 repositories {
     mavenCentral()
     jcenter()
-//    maven(url = "https://m2.dv8tion.net/releases")
+    maven(url = "https://m2.dv8tion.net/releases")
     maven(url = "https://jitpack.io")
 }
 
@@ -22,7 +22,9 @@ dependencies {
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
 
     // Audio player
-    implementation("com.github.devoxin:lavaplayer:1.9.1")
+//    implementation("com.github.devoxin:lavaplayer:1.3.73")
+    implementation("dev.arbjerg:lavaplayer:2.2.1")
+
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 

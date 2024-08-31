@@ -133,7 +133,8 @@ object SoundPlayerManager: Loggable {
         connections.remove(guildId)!!.shutdown()
     }
 
-    private fun createYoutubeResultHandler(player: AudioPlayer, channel: MessageChannelBehavior? = null) = object : AudioLoadResultHandler {
+    private fun createYoutubeResultHandler(player: AudioPlayer, channel: MessageChannelBehavior? = null) = object :
+        AudioLoadResultHandler {
 
         override fun trackLoaded(track: AudioTrack?) {
             runBlocking {
