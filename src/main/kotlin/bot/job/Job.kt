@@ -25,17 +25,16 @@ abstract class Job(
 
         CoroutineScope( Dispatchers.Default ).async {
             if (executionInMillis > 1000) {
+                registered = true
                 while (isActive) {
                     execute()
                     delay(executionInMillis)
                 }
             } else {
                 logger.info("Job of name=${name} will not be registered, as its delay would be less than a second.")
-                execute()
+                registered = false
             }
         }
-
-        registered = true
     }
 
     // Implementations must override this one
