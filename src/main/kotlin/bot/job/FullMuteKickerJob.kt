@@ -37,7 +37,7 @@ object FullMuteKickerJob : Job(
                         val postDisconnect = member.disconnect()
                         logger.info("[FullMuteKickerJob] User ${member.username} was disconnected after of ${(ROUNDS_BEFORE_KICKING * executionDelaySeconds) / 60} minutes being fully muted. postDisconnectMember=$postDisconnect")
                     } else {
-                        // not their final life, increases count
+                        // not their final life, increase count
                         roundsMuted[it.userId] = roundsMuted[it.userId]!! + 1
                     }
                 } else {
@@ -45,7 +45,6 @@ object FullMuteKickerJob : Job(
                     roundsMuted[it.userId] = 0
                 }
             }
-        logger.info("[FullMuteKickerJob] Round executed roundsMutedMap=$roundsMuted")
     }
 }
 
