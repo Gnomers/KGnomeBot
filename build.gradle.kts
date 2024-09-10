@@ -1,6 +1,9 @@
+//project.setProperty("mainClassName","bot.KGnomeRunnerKt")
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.0"
     application
+//    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 repositories {
@@ -53,25 +56,16 @@ tasks.named<Test>("test") {
 
 tasks {
     jar {
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest {
             attributes["Main-Class"] = "bot.KGnomeRunnerKt"
         }
-
-
-
         configurations.compileClasspath.get().forEach {
             from(if (it.isDirectory) it else zipTree(it))
         }
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
-    distTar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    }
-
-    distZip {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    }
 
     compileKotlin {
         kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.ExperimentalStdlibApi"

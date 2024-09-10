@@ -7,7 +7,7 @@ RUN gradle build
 FROM openjdk:11-jdk-slim
 
 RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/ /app/
+COPY --from=build /home/gradle/src/build/libs/*-all.jar /app/
 
 # Setup env vars
 ARG DISCORD_AUTH_TOKEN
