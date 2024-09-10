@@ -20,4 +20,4 @@ RUN echo HUGGING_FACE_AUTH_TOKEN=${HUGGING_FACE_AUTH_TOKEN} >> .env
 RUN echo CUSTOM_ENTRY_CONFIG_BASE64=${CUSTOM_ENTRY_CONFIG_BASE64} >> .env
 RUN echo AWAN_LLM_KEY=${AWAN_LLM_KEY} >> .env
 
-ENTRYPOINT ["java","-jar","-Duser.country=BR", "-Duser.language=pt","/app/kgnome.jar"]
+ENTRYPOINT ["java","-jar","-Duser.country=BR", "-Duser.language=pt","/app/kgnome-all.jar"]
