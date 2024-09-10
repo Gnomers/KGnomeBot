@@ -1,9 +1,10 @@
-//project.setProperty("mainClassName","bot.KGnomeRunnerKt")
+// Used by ShadowJar to make kgnome-all.jar
+project.setProperty("mainClassName","bot.KGnomeRunnerKt")
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.0"
     application
-//    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 repositories {
