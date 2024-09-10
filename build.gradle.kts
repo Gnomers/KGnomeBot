@@ -23,7 +23,8 @@ dependencies {
 
     // Audio player
 //    implementation("com.github.devoxin:lavaplayer:1.3.73")
-    implementation("dev.arbjerg:lavaplayer:2.2.1")
+    implementation("com.github.walkyst:lavaplayer-fork:1.4.3")
+//    implementation("dev.arbjerg:lavaplayer:2.2.1")
 
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
