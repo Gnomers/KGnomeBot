@@ -29,7 +29,7 @@ object AwanLLMService : Loggable {
 
     val PROMPT = object {}.javaClass.classLoader.getResource("PROMPT_MINI.txt")!!.readText()
         .lines().filterNot { line -> line.startsWith("//") }
-        .joinToString { "" }
+        .joinToString(separator = "\n")
         .replace("{BEGIN_OF_TEXT}", "<|begin_of_text|>")
         .replace("{START_HEADER_ID}", "<|start_header_id|>")
         .replace("{END_HEADER_ID}", "<|end_header_id|>")
