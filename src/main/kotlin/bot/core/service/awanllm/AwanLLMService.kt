@@ -81,7 +81,7 @@ object AwanLLMService : Loggable {
 
             val content = response.body().string()
             logger.info("Response: body=$content")
-            val responseBody = mapper.readValue<ArliAIResponse>(content)
+            val responseBody = mapper.readValue<AwanLLMResponse>(content)
 
 
             responseBody.choices.firstOrNull()?.text?.removeSurrounding("\"")?.withTemperatureAndModel(randomTemperature, model) ?: ERROR_MESSAGE
