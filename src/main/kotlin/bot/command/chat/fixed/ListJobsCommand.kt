@@ -4,9 +4,9 @@ import bot.command.Command
 import bot.core.JobRegistrator
 import dev.kord.core.event.message.MessageCreateEvent
 
-object ShowJobsCommand: Command(
+object ListJobsCommand: Command(
     name = "jobs",
-    description = "Shows all current jobs"
+    description = "Lists all current jobs"
 ) {
     override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         var response = StringBuilder()

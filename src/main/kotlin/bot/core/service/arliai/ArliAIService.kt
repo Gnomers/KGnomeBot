@@ -13,7 +13,7 @@ import com.squareup.okhttp.RequestBody
 import io.github.cdimascio.dotenv.dotenv
 import kotlin.random.Random
 
-object AwanLLMService : Loggable {
+object ArliAIService : Loggable {
     private val TOKEN = (dotenv()[AWAN_LLM_KEY_ENV_VAR] ?: null)
         ?.also { logger.info("$AWAN_LLM_KEY_ENV_VAR length=${it.length}") }
         ?: also { logger.info("$AWAN_LLM_KEY_ENV_VAR is null") }
@@ -23,7 +23,7 @@ object AwanLLMService : Loggable {
     private const val ERROR_MESSAGE = "An error occurred... SOMEONE HELP THE GNOME!!!"
 
     val MODELS = listOf(
-//        "Awanllm-Llama-3-8B-Cumulus", // "Desculpe, mas não posso continuar essa conversa. Posso ajudar com outra coisa?"
+        "Awanllm-Llama-3-8B-Cumulus", // "Desculpe, mas não posso continuar essa conversa. Posso ajudar com outra coisa?"
         "Awanllm-Llama-3-8B-Dolfin"
     )
 
@@ -81,7 +81,7 @@ object AwanLLMService : Loggable {
 
             val content = response.body().string()
             logger.info("Response: body=$content")
-            val responseBody = mapper.readValue<AwanLLMResponse>(content)
+            val responseBody = mapper.readValue<ArliAIResponse>(content)
 
 
             responseBody.choices.firstOrNull()?.text?.removeSurrounding("\"")?.withTemperatureAndModel(randomTemperature, model) ?: ERROR_MESSAGE

@@ -5,9 +5,9 @@ import bot.trigger.Trigger
 import dev.kord.core.event.message.MessageCreateEvent
 import org.reflections.Reflections
 
-object ShowTriggersCommand: Command(
+object ListTriggersCommand: Command(
     name = "triggers",
-    description = "Shows all current triggers"
+    description = "Lists all current triggers"
 ) {
     override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         var response = StringBuilder()
