@@ -11,7 +11,7 @@ object ListSoundsCommand: Command(
     override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         var response = StringBuilder()
         response.appendLine("Hello there, old chum! Here are the sounds on this bot:")
-        Sound.entries.forEach { sound ->
+        Sound.entries.sorted().forEach { sound ->
             response.appendLine(sound.name)
         }
         event.message.channel.createMessage(response.toString())
