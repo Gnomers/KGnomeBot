@@ -8,10 +8,14 @@ steps:
       - --build-arg=HUGGING_FACE_AUTH_TOKEN
       - --build-arg=CUSTOM_ENTRY_CONFIG_BASE64
       - --build-arg=AWAN_LLM_KEY
+      - --build-arg=GUACHAI_URL
+      - --build-arg=GUACHAI_AUTH
     env:
       - 'DISCORD_AUTH_TOKEN=$_DISCORD_AUTH_TOKEN'
       - 'HUGGING_FACE_AUTH_TOKEN=$_HUGGING_FACE_AUTH_TOKEN'
       - 'CUSTOM_ENTRY_CONFIG_BASE64=$_CUSTOM_ENTRY_CONFIG_BASE64'
       - 'AWAN_LLM_KEY=$_AWAN_LLM_KEY'
+      - 'GUACHAI_URL=$_GUACHAI_URL'
+      - 'GUACHAI_AUTH=$_GUACHAI_AUTH'
   - name: gcr.io/cloud-builders/gcloud
     args: [ compute, instance-groups, managed, rolling-action, restart, gnome-docker, --zone=us-central1-a ]
