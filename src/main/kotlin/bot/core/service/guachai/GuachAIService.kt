@@ -1,6 +1,8 @@
-package bot.core.service.awanllm
+package bot.core.service.guachai
 
-import bot.constants.AWAN_LLM_KEY_ENV_VAR
+import bot.constants.GENERIC_ERROR_MESSAGE
+import bot.constants.GUACHAI_AUTH
+import bot.constants.GUACHAI_URL
 import bot.logging.Loggable
 import bot.utilities.buildDefault
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -13,50 +15,38 @@ import com.squareup.okhttp.RequestBody
 import io.github.cdimascio.dotenv.dotenv
 import kotlin.random.Random
 
-object AwanLLMService : Loggable {
-    private val TOKEN = (dotenv()[AWAN_LLM_KEY_ENV_VAR] ?: null)
-        ?.also { logger.info("$AWAN_LLM_KEY_ENV_VAR length=${it.length}") }
-        ?: also { logger.info("$AWAN_LLM_KEY_ENV_VAR is null") }
+object GuachAIService: Loggable {
+    val URL = dotenv()[GUACHAI_URL] ?: null
+    val AUTH = dotenv()[GUACHAI_AUTH] ?: null
+
     private val client = OkHttpClient().buildDefault()
-
     private val mapper = ObjectMapper().registerKotlinModule()
-    private const val ERROR_MESSAGE = "An error occurred... SOMEONE HELP THE GNOME!!!"
 
-    val MODELS = listOf(
-        "Awanllm-Llama-3-8B-Cumulus", // "Desculpe, mas não posso continuar essa conversa. Posso ajudar com outra coisa?"
-        "Awanllm-Llama-3-8B-Dolfin"
-    )
 
-    val PROMPT = object {}.javaClass.classLoader.getResource("PROMPT_MINI.txt")!!.readText()
+    val PROMPT = object {}.javaClass.classLoader.getResource("PROMPT.txt")!!.readText()
         .lines().filterNot { line -> line.startsWith("//") }
         .joinToString(separator = "\n")
-        .replace("{BEGIN_OF_TEXT}", "<|begin_of_text|>")
-        .replace("{START_HEADER_ID}", "<|start_header_id|>")
-        .replace("{END_HEADER_ID}", "<|end_header_id|>")
-        .replace("{EOT_ID}", "<|eot_id|>")
+        .replace("{BEGIN_OF_TEXT}", "")
+        .replace("{START_HEADER_ID}", "")
+        .replace("{END_HEADER_ID}", "")
+        .replace("{EOT_ID}", "")
         .replace("\n", "")
         .replace("\r", "")
         // putting \n only where the prompt NEEDS it
         .replace("{LINE_BREAK}", "\n")
 
-
-
     fun prompt(input: String): String {
         val completePrompt = PROMPT.replace("{input}", input)
         val randomTemperature = Random.nextFloat()
         val mediaType = MediaType.parse("application/json")
-        val model = MODELS.random()
-//        val model = "Awanllm-Llama-3-8B-Cumulus"
-
-        val req = AwanLLMRequest(
+        val model = "llama3.1:8b"
+        val req = GuachAIRequest(
             model = model,
             prompt = completePrompt,
-            repetitionPenalty = 1.1,
-            temperature = randomTemperature,
-            topP = 0.9,
-            topK = 40,
-            maxTokens = 1024,
-            stream = false
+            stream = false,
+            options = GuachAIRequest.Options(
+                temperature = randomTemperature
+            )
         )
 
         val body = RequestBody.create(
@@ -64,10 +54,10 @@ object AwanLLMService : Loggable {
             mapper.writeValueAsString(req)
         )
         val request = Request.Builder()
-            .url("https://api.awanllm.com/v1/completions")
+            .url(URL)
             .post(body)
             .addHeader("Content-Type", "application/json")
-            .addHeader("Authorization", "Bearer $TOKEN")
+            .addHeader("Authorization", AUTH)
             .build()
 
         logger.info(
@@ -81,18 +71,17 @@ object AwanLLMService : Loggable {
 
             val content = response.body().string()
             logger.info("Response: body=$content")
-            val responseBody = mapper.readValue<AwanLLMResponse>(content)
+            val responseBody = mapper.readValue<GuachAIResponse>(content)
 
-
-            responseBody.choices.firstOrNull()?.text?.removeSurrounding("\"")?.withTemperatureAndModel(randomTemperature, model) ?: ERROR_MESSAGE
+            responseBody.response.withTemperatureAndModel(randomTemperature, model)
         } catch (e: Exception) {
-            logger.error("Error calling AwanLLM. error=${e.message}", e)
-            return ERROR_MESSAGE
+            logger.error("Error calling GuachAI. error=${e.message}", e)
+            return GENERIC_ERROR_MESSAGE
         }
     }
 
     private fun String.withTemperatureAndModel(temp: Float, model: String): String {
-         return "$this [$temp]"
+        return "$this [$temp]"
     }
 }
 
@@ -103,7 +92,7 @@ fun main() {
     )
         .forEach {
             println("Q: $it")
-            println("R: ${AwanLLMService.prompt(it)}")
+            println("R: ${GuachAIService.prompt(it)}")
             println("------------")
         }
 }
