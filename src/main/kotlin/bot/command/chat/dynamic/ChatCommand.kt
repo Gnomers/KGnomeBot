@@ -1,7 +1,7 @@
 package bot.command.chat.dynamic
 
 import bot.command.Command
-import bot.core.service.awanllm.AwanLLMService
+import bot.core.service.guachai.GuachAIService
 import dev.kord.core.behavior.channel.withTyping
 import dev.kord.core.event.message.MessageCreateEvent
 
@@ -12,7 +12,7 @@ object ChatCommand: Command(
 ) {
     override suspend fun invoke(event: MessageCreateEvent, subCommand: String?) {
         event.message.channel.withTyping {
-            event.message.channel.createMessage(AwanLLMService.prompt(subCommand!!))
+            event.message.channel.createMessage(GuachAIService.prompt(subCommand!!))
         }
     }
 }
