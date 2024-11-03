@@ -23,23 +23,23 @@ object GuachAIService: Loggable {
     private val mapper = ObjectMapper().registerKotlinModule()
 
 
-    val PROMPT = object {}.javaClass.classLoader.getResource("PROMPT.txt")!!.readText()
+    val PROMPT = object {}.javaClass.classLoader.getResource("PROMPT_GENERIC.txt")!!.readText()
         .lines().filterNot { line -> line.startsWith("//") }
         .joinToString(separator = "\n")
-        .replace("{BEGIN_OF_TEXT}", "")
-        .replace("{START_HEADER_ID}", "")
-        .replace("{END_HEADER_ID}", "")
-        .replace("{EOT_ID}", "")
-        .replace("\n", "")
-        .replace("\r", "")
-        // putting \n only where the prompt NEEDS it
-        .replace("{LINE_BREAK}", "\n")
+//        .replace("{BEGIN_OF_TEXT}", "")
+//        .replace("{START_HEADER_ID}", "")
+//        .replace("{END_HEADER_ID}", "")
+//        .replace("{EOT_ID}", "")
+//        .replace("\n", "")
+//        .replace("\r", "")
+//        // putting \n only where the prompt NEEDS it
+//        .replace("{LINE_BREAK}", "\n")
 
     fun prompt(input: String): String {
         val completePrompt = PROMPT.replace("{input}", input)
         val randomTemperature = Random.nextFloat()
         val mediaType = MediaType.parse("application/json")
-        val model = "llama3.1:8b"
+        val model = "gnome"
         val req = GuachAIRequest(
             model = model,
             prompt = completePrompt,
