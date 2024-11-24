@@ -36,13 +36,13 @@ object GuachAIService: Loggable {
 //        .replace("{LINE_BREAK}", "\n")
 
     fun prompt(input: String): String {
-        val completePrompt = PROMPT.replace("{input}", input)
+//        val completePrompt = PROMPT.replace("{input}", input)
         val randomTemperature = Random.nextFloat()
         val mediaType = MediaType.parse("application/json")
         val model = "gnome"
         val req = GuachAIRequest(
             model = model,
-            prompt = completePrompt,
+            prompt = input,
             stream = false,
             options = GuachAIRequest.Options(
                 temperature = randomTemperature
