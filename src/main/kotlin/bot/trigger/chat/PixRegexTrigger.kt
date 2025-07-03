@@ -8,10 +8,11 @@ import bot.utilities.isCommand
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
+import jdk.nashorn.internal.runtime.regexp.joni.Regex
 
 object PixRegexTrigger: Trigger(
-    name = "monki_regex",
-    description = "Sends a monki ascii when theres a message that reminds of our ape friend"
+    name = "pix_regex",
+    description = "Sends a E O PIX? sound when theres a message that reminds of a missing pix payment"
 ), Loggable {
     val regex = Regex(".*pix.*|.*nada ainda.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 

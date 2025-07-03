@@ -14,7 +14,7 @@ object RonaldinhoRegexTrigger: Trigger(
     description = "Plays the classic RONALDINHO SOCCER sound when the regex matches"
 ), Loggable {
     // I have no idea what I'm doing
-    val regex = Regex(".*ha.*ha.*ha.*ha.*|.*ronaldinho.*|.*soccer.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+    val regex = Regex(".*ha.*ha.*|.*ronaldinho.*|.*soccer.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
             val message = this.message.content
