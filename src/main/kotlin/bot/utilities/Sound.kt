@@ -15,6 +15,7 @@ enum class Sound(val path: String) {
     HM_MONKI("audio/monki.ogg"),
     CS("audio/ce_ess.ogg"),
     GNOME_POWER("audio/gnome_power.ogg"),
+    CREMOSO("audio/cremoso.mp3"),
     BANDIDO("audio/risadinha_de_bandido.mp3"),
     BALBOA("audio/balboa.mp3"),
     FALICEU("audio/faliceu.mp3"),
@@ -72,7 +73,8 @@ enum class Sound(val path: String) {
             PIPIPI,
             SEU_MADRUGA_NOSSA,
             TA_LIGADO,
-            IN_NOMINE_PATRIS
+            IN_NOMINE_PATRIS,
+            CREMOSO
         )
     }
 }

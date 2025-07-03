@@ -1,24 +1,27 @@
 package bot.trigger.chat
 
-import bot.constants.MONKI_ASCII
+import bot.core.voice.SoundPlayerManager
 import bot.logging.Loggable
 import bot.trigger.Trigger
+import bot.utilities.Sound
 import bot.utilities.isCommand
 import bot.utilities.onIgnoringBots
 import dev.kord.core.Kord
 import dev.kord.core.event.message.MessageCreateEvent
 
-object MonkiRegexTrigger: Trigger(
-    name = "monki_regex",
-    description = "Sends a monki ascii when theres a message that reminds of our ape friend"
+object NossaRegexTrigger: Trigger(
+    name = "nossa_regex",
+    description = "Sends a special sound when someone is in disbelief ('nossa')"
 ), Loggable {
-    val regex = Regex(".*monkey.*|.*monki.*|.*macaco.*|.*mamaco.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+    // I have no idea what I'm doing
+    val regex = Regex(".*nossa.*", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
 
     override suspend fun register(kordInstance: Kord) {
         kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
             val message = this.message.content
             if (!message.isCommand() && message.matches(regex)) {
-                this.message.channel.createMessage(MONKI_ASCII.random())
+                var sound = listOf(Sound.E_O_PIX, Sound.CREMOSO).random()
+                SoundPlayerManager.playSoundForMessage(this, sound)
             }
         }
     }
