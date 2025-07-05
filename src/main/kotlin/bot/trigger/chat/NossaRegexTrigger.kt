@@ -20,7 +20,7 @@ object NossaRegexTrigger: Trigger(
         kordInstance.onIgnoringBots<MessageCreateEvent>(logger = logger) {
             val message = this.message.content
             if (!message.isCommand() && message.matches(regex)) {
-                var sound = listOf(Sound.E_O_PIX, Sound.CREMOSO).random()
+                var sound = listOf(Sound.SEU_MADRUGA_NOSSA, Sound.CREMOSO).random()
                 SoundPlayerManager.playSoundForMessage(this, sound)
             }
         }
