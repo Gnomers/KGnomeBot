@@ -25,4 +25,6 @@ RUN echo AWAN_LLM_KEY=${AWAN_LLM_KEY} >> .env
 RUN echo GUACHAI_URL=${GUACHAI_URL} >> .env
 RUN echo GUACHAI_AUTH=${GUACHAI_AUTH} >> .env
 
+RUN rm -rf /home/gradle/.gradle/caches/
+
 ENTRYPOINT ["java","-jar","-Duser.country=BR", "-Duser.language=pt","/app/kgnome-all.jar"]
