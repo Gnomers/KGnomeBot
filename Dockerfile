@@ -4,7 +4,7 @@ WORKDIR /home/gradle/src
 
 RUN gradle build
 
-FROM openjdk:11-jdk-slim
+FROM eclipse-temurin:11-jdk-jammy
 
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*-all.jar /app/

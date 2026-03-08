@@ -110,3 +110,4 @@ As the SoundPlayerManager contains a single VoiceConnection instead of a VoiceCo
 
 ## Unit and integration tests
 What?
+
