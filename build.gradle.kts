@@ -2,7 +2,7 @@
 project.setProperty("mainClassName","bot.KGnomeRunnerKt")
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.0"
+    id("org.jetbrains.kotlin.jvm") version "2.3.0"
     application
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
@@ -19,7 +19,7 @@ dependencies {
     implementation(kotlin("reflect"))
 
     // Discord
-    implementation("dev.kord:kord-core-voice:0.14.0")
+    implementation("dev.kord:kord-core-voice:0.18.0")
 
     // Logging
     implementation("org.slf4j:slf4j-simple:2.0.3")
@@ -69,7 +69,9 @@ tasks {
 
 
     compileKotlin {
-        kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.ExperimentalStdlibApi"
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+        compilerOptions {
+            freeCompilerArgs.add("-opt-in=kotlin.ExperimentalStdlibApi")
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
 }
