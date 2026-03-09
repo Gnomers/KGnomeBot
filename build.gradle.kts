@@ -28,7 +28,7 @@ dependencies {
     // Audio player
 //    implementation("com.github.devoxin:lavaplayer:1.3.73")
 //    implementation("com.github.walkyst:lavaplayer-fork:1.4.3")
-    implementation("com.sedmelluq:lavaplayer:1.3.77")""
+    implementation("com.sedmelluq:lavaplayer:1.3.77")
 
 
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
